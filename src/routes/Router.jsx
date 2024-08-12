@@ -1,19 +1,19 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import MainPage from "./MainPage"; // MainPage에서 MainBar를 포함
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import MainPage from '../pages/MainPage'
 
-function App() {
+function Router() {
     return (
-        <Router>
+        <BrowserRouter>
             <Routes>
                 <Route path="/" element={<MainPage title="GabLog" />} />
                 <Route path="/following" element={<MainPage title="팔로잉" />} />
                 <Route path="/popular" element={<MainPage title="인기글" />} />
             </Routes>
-        </Router>
+        </BrowserRouter>
     );
 }
 
-export default App;
+export default Router;
 
 
