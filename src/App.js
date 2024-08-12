@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainPage from "./page/MainPage";
+import MainPage from "./pages/MainPage";
 
 
 //추후에 router 파일 분리할 예정
