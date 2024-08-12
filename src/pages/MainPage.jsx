@@ -5,12 +5,12 @@ import PostList from '../components/post/PostList';
 import MainBar from "../components/bars/MainBar";
 import TitleBar from "../components/bars/TitleBar";
 
+
 const Wrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-
 `;
 
 const ContentWrapper = styled.div`
@@ -28,7 +28,7 @@ const MainBarWrapper = styled.div`
     background-color: white;
 `;
 
-function MainPage(props) {
+function MainPage({ title }) {
     return (
         <Wrapper>
             <TitleBar />
@@ -43,4 +43,6 @@ function MainPage(props) {
 }
 
 export default MainPage;
+
+
 

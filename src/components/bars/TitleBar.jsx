@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import Button from "../../style/Button";
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from "@mui/material/IconButton";
 
 const Wrapper = styled.div`
   width: calc(100% - 32px);
@@ -27,6 +29,12 @@ function TitleBar(props){
     return(
         <Wrapper>
           <MainTitleText>GapLog</MainTitleText>
+          <IconButton sx={{ 
+            color: "#111111",
+            fontSize: '35px', 
+          }}>
+            <SearchIcon />
+          </IconButton>
           <LoginButton title="로그인"></LoginButton>
         </Wrapper>
     );
