@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-
+import { FiHeart, FiMessageCircle, FiStar, FiMeh } from "react-icons/fi";
 
 //전체 Item 레이아웃
 const Container = styled.div`
@@ -55,10 +55,10 @@ const Date = styled.div`
     font-weight: 400;
 `;
 
-//Post(post 사진, 제목, 본문)
+//Post(post 사진, icon bar, 제목, 본문)
 const PostImg = styled.div`
 width: 100%;
-height: 235px;
+height: 210px;
 overflow: hidden;
 margin-bottom: 10px;
 & > img{
@@ -66,6 +66,26 @@ margin-bottom: 10px;
     height: 100%;
     object-fit: cover;
 }
+`
+
+const IconWrapper = styled.div`
+    width: 100%;
+    height: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    font-size: 12px;
+    color: #767676;
+`
+
+const IconCount = styled.div`
+    margin-left: 3px;
+    margin-right: 5px;
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: #767676;
 `
 
 const TitleText = styled.h1`
@@ -77,10 +97,10 @@ const TitleText = styled.h1`
 
 
 const MainText = styled.p`
-    font-family: "Inter", sans-serif;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: "Inter", sans-serif;
     font-size: 14px;
     font-weight: 400;
     width: 100%;
@@ -105,6 +125,17 @@ function PostItem(props){
         <PostImg>
             <img src={post.userprofile} alt="profile" />
         </PostImg>
+        
+        <IconWrapper>
+            <FiHeart size="20"/>
+            <IconCount>{12}</IconCount>
+            <FiMessageCircle size="20" />
+            <IconCount>{12}</IconCount>
+            <FiStar size="20" />
+            <IconCount>{12}</IconCount>
+            <FiMeh size="20" />
+            <IconCount>{12}</IconCount>
+        </IconWrapper>
         <TitleText>{post.title}</TitleText>
         <MainText>{post.content}</MainText>
     </Container>
