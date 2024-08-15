@@ -12,7 +12,7 @@ const Container = styled.div`
         background: lightgrey;
     }
 `
-const Wrapper = styled.div`
+const UserWrapper = styled.div`
     display: flex;
     align-items: center;
     margin-bottom: 16px;
@@ -50,20 +50,44 @@ const Date = styled.div`
     font-weight: 400;
 `;
 
+const PostImg = styled.div`
+width: 100%;
+height: 235px;
+overflow: hidden;
+margin-bottom: 10px;
+& > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+`
+
 const TitleText = styled.h1`
     font-family: "Inter", sans-serif;
     font-size: 20px;
     font-weight: 600;
-    margin: 0;
+    margin-bottom: 5px;
 `;
 
+
+const MainText = styled.p`
+    font-family: "Inter", sans-serif;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    height: 20px;
+    margin: 0;
+`;
 
 
 function PostItem(props){
     const { post, onClick } = props;
     return(
         <Container onClick={onClick}>
-        <Wrapper>
+        <UserWrapper>
             <ProfileImg>
                 <img src={post.userprofile} alt="profile" />
             </ProfileImg>
@@ -71,8 +95,12 @@ function PostItem(props){
                 <UserId>{post.userid}</UserId>
                 <Date>{post.date}</Date>
             </UserInfo>
-        </Wrapper>
+        </UserWrapper>
+        <PostImg>
+            <img src={post.userprofile} alt="profile" />
+        </PostImg>
         <TitleText>{post.title}</TitleText>
+        <MainText>{post.content}</MainText>
     </Container>
         
     );
