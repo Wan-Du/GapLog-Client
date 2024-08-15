@@ -81,7 +81,7 @@ const IconWrapper = styled.div`
 
 const IconCount = styled.div`
     margin-left: 3px;
-    margin-right: 5px;
+    margin-right: 8px;
     font-family: "Inter", sans-serif;
     font-size: 12px;
     font-weight: 400;
