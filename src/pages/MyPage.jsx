@@ -2,15 +2,15 @@ import React from "react";
 import styled from "styled-components";
 import TitleBar from "../components/bars/TitleBar";
 import MyPageBar from "../components/bars/MyPageBar";
-
+import Wandubat from "../components/user/Wandubat";
 
 const Wrapper = styled.div`
     width: 100%;
-
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
+
 const UserBackgroundImg = styled.div`
     width: 100%;
     max-width: 1200px;
@@ -23,8 +23,7 @@ const UserBackgroundImg = styled.div`
         height: 100%;
         object-fit: cover;
     }
-`
-
+`;
 
 const MyPageBarWrapper = styled.div`
     top: 0;
@@ -33,6 +32,8 @@ const MyPageBarWrapper = styled.div`
     z-index: 1000;
     background-color: white;
 `;
+
+
 
 function MyPage({ title }) {
     return (
@@ -45,6 +46,7 @@ function MyPage({ title }) {
             <MyPageBarWrapper>
                 <MyPageBar />
             </MyPageBarWrapper>
+            <Wandubat />
         </Wrapper>
     );
 }

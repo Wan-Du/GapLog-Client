@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import data from '../data.json';
-import PostList from '../components/post/PostList';
+import PostList from "../components/post/PostList";
 import MainBar from "../components/bars/MainBar";
 import TitleBar from "../components/bars/TitleBar";
 

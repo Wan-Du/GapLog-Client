@@ -24,18 +24,18 @@ function PostList(props) {
     return (
         <Container>
             <Wrapper>
-            {posts.map((post, index) => {
-                return (
-                    <PostItem
-                        key={post.id}
-                        post={post}
-                        onClick={() => {
-                            onClickItem(post);
-                        }}
-                    />
-                );
-            })}
-        </Wrapper>
+                {posts.map((post, index) => {
+                    return (
+                        <PostItem
+                            key={post.id}
+                            post={post}
+                            onClick={() => {
+                                onClickItem(post);
+                            }}
+                        />
+                    );
+                })}
+            </Wrapper>
         </Container>
     );
 }
