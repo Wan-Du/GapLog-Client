@@ -57,15 +57,15 @@ const Date = styled.div`
 
 //Post(post 사진, icon bar, 제목, 본문)
 const PostImg = styled.div`
-width: 100%;
-height: 210px;
-overflow: hidden;
-margin-bottom: 10px;
-& > img{
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    height: 210px;
+    overflow: hidden;
+    margin-bottom: 10px;
+    & > img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 `
 
 const IconWrapper = styled.div`

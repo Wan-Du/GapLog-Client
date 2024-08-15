@@ -1,24 +1,30 @@
 import React from "react";
 import styled from "styled-components";
-import data from '../data.json';
-import PostList from '../components/post/PostList';
 import TitleBar from "../components/bars/TitleBar";
 import MyPageBar from "../components/bars/MyPageBar";
 
 
 const Wrapper = styled.div`
     width: 100%;
+
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
+const UserBackgroundImg = styled.div`
+    width: 100%;
+    max-width: 1200px;
+    height: 170px;
+    overflow: hidden;
+    margin-bottom: 10px;
 
-const ContentWrapper = styled.div`
-    width: calc(100% - 32px);
-    max-width: 1200px; 
-    margin: 0 auto;
-    margin-top: 20px;
-`;
+    & > img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+`
+
 
 const MyPageBarWrapper = styled.div`
     top: 0;
@@ -32,12 +38,13 @@ function MyPage({ title }) {
     return (
         <Wrapper>
             <TitleBar />
+            <UserBackgroundImg>
+                {/* data에서 user의 배경이미지와 연결 */}
+                <img alt="background" />
+            </UserBackgroundImg>
             <MyPageBarWrapper>
                 <MyPageBar />
             </MyPageBarWrapper>
-            <ContentWrapper>
-                <PostList posts={data} />
-            </ContentWrapper>
         </Wrapper>
     );
 }
