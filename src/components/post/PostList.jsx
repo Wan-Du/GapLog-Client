@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components'
 import PostItem from './PostItem';
 
+//Post Item을 그리드 형식으로 출력
 const Container = styled.div`
     display: flex; 
     justify-content: center; 

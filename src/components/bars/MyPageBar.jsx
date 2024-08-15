@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
+//mypage에서 사용
 const Container = styled.div`
     display: flex; 
     justify-content: left; 

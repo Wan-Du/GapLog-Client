@@ -4,6 +4,7 @@ import Button from "../../style/Button";
 import SearchIcon from '@mui/icons-material/Search';
 import IconButton from "@mui/material/IconButton";
 
+//전체 모든 페이지에서 보여지는 gaplog 제목 bar
 const Wrapper = styled.div`
   width: calc(100% - 32px);
   max-width: 1200px;

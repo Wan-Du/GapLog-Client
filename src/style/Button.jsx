@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+//전체 button style
+
 const StyledButton = styled.button`
     width: 117px;
     height: 40px;

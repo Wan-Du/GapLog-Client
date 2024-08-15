@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
+
+//전체 Item 레이아웃
 const Container = styled.div`
     width: 320px;
     height: 376px;
@@ -12,6 +14,9 @@ const Container = styled.div`
         background: lightgrey;
     }
 `
+
+//User(프로필 이미지, user id, post 작성한 시간)
+//User Item 레이아웃
 const UserWrapper = styled.div`
     display: flex;
     align-items: center;
@@ -50,6 +55,7 @@ const Date = styled.div`
     font-weight: 400;
 `;
 
+//Post(post 사진, 제목, 본문)
 const PostImg = styled.div`
 width: 100%;
 height: 235px;
