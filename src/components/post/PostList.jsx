@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     display: grid; 
     grid-template-columns: repeat(3, 1fr); 
     gap: 16px; 
+    row-gap: 30px;
     justify-items: center; 
     height: 500px;
     grid-template-areas: "Wrapper";
