@@ -4,7 +4,8 @@ import wanduData from '../../wandu.json';
 
 // 숫자에 따른 색상 매핑
 const getColor = (value) => {
-    const colors = ['#e0e0e0', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ff9800', '#f44336'];
+    const colors = ['#DDDFE0', '#8CE79B', '#77CC85', '#5B9765', 
+        '#DAA235', '#BF7027', '#62331C'];
     return colors[Math.min(value, colors.length - 1)];
 };
 
