@@ -6,19 +6,26 @@ import Wandubat from "../components/user/Wandubat";
 import background from '../background.png';
 import profile from '../profile.png';
 
-const Wrapper = styled.div`
+const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
 
+const UserWrapper = styled.div`
+    height: 400px;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+`;
+
 const UserBackgroundImg = styled.div`
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     height: 170px;
     overflow: hidden;
-    margin-bottom: 10px;
 
     & > img{
         width: 100%;
@@ -28,17 +35,32 @@ const UserBackgroundImg = styled.div`
 `;
 
 const ProfileImg = styled.div`
-    width: 45px;
-    height: 45px;
+    position: absolute;
+    top: 130px;
+    left: 100px;
+    width: 130px;
+    height: 130px;
     border-radius: 70%;
     overflow: hidden;
-    margin-right: 16px;
+
     & > img{
         width: 100%;
         height: 100%;
         object-fit: cover;
     }
 `
+
+const UserId = styled.div`
+    position: absolute;
+    top: 270px;
+    left: 122px;
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 27px;
+    display: inline-block;
+    color: #30180d;
+    text-align: left;  
+`;
 
 const MyPageBarWrapper = styled.div`
     top: 0;
@@ -52,20 +74,23 @@ const MyPageBarWrapper = styled.div`
 
 function MyPage({ title }) {
     return (
-        <Wrapper>
+        <Container>
             <TitleBar />
-            <UserBackgroundImg>
-                {/* data에서 user의 배경이미지와 연결 */}
-                <img src={background} alt="back" />
-            </UserBackgroundImg>
-            <ProfileImg>
-                <img src={profile} alt="profile" />
-            </ProfileImg>
+            <UserWrapper>
+                <UserBackgroundImg>
+                    {/* data에서 user의 배경이미지와 연결 */}
+                    <img src={background} alt="back" />
+                </UserBackgroundImg>
+                <ProfileImg>
+                    <img src={profile} alt="profile" />
+                </ProfileImg>
+                <UserId>jinji123</UserId>
+            </UserWrapper>
             <MyPageBarWrapper>
                 <MyPageBar />
             </MyPageBarWrapper>
             <Wandubat />
-        </Wrapper>
+        </Container>
     );
 }
 
