@@ -16,11 +16,19 @@ const StyledButton = styled.button`
     border: 1px solid #eeddbb;
     display: inline-block;
     text-align: center;
+
+    &.grey{
+        position: absolute;
+        top: 190px;
+        right: 100px;
+        background-color: #C4C4C4;
+        border: 1px solid #C4C4C4;
+    }
 `;
 
 function Button(props) {
-    const {title, onClick} = props;
-    return <StyledButton onClick={onClick}>{title || "button"}</StyledButton>;
+    const { title, onClick, className } = props;
+    return <StyledButton onClick={onClick} className={className}>{title || "button"}</StyledButton>;
 }
 
 export default Button;

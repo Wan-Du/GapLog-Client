@@ -25,7 +25,7 @@ const MainTitleText = styled.div`
 `;
 
 const LoginButton = styled(Button)`
-    margin-left: auto;
+    margin-left: 0 auto;
 `;
 
 function TitleBar(props){

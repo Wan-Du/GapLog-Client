@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "../style/Button";
 import TitleBar from "../components/bars/TitleBar";
 import MyPageBar from "../components/bars/MyPageBar";
 import Wandubat from "../components/user/Wandubat";
@@ -62,12 +63,26 @@ const UserId = styled.div`
     text-align: left;  
 `;
 
+const UserBio = styled.div`
+  	width: 320px;
+  	position: absolute;
+    top: 278px;
+    left: 240px;
+  	font-size: 15px;
+  	font-weight: 500;
+  	font-family: "Inter", sans-serif;
+  	color: rgba(48, 24, 13, 0.73);
+  	text-align: left;
+  	display: inline-block;
+`;
+
 const MyPageBarWrapper = styled.div`
     top: 0;
     width: calc(100% - 32px);
     max-width: 1200px;
     z-index: 1000;
     background-color: white;
+    margin-bottom: 10px;
 `;
 
 
@@ -85,6 +100,8 @@ function MyPage({ title }) {
                     <img src={profile} alt="profile" />
                 </ProfileImg>
                 <UserId>jinji123</UserId>
+                <UserBio>안녕하시소</UserBio>
+                <Button title="프로필 편집" className="grey" />
             </UserWrapper>
             <MyPageBarWrapper>
                 <MyPageBar />
