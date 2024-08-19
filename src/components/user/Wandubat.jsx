@@ -13,16 +13,31 @@ const Container = styled.div`
     width: 1090px;
     height: 320px;
     background-color: #F4F4F4;
-    padding: 20px;
+    display: block;
+    padding: 0px 20px;
 `;
 
-// Grass 컴포넌트
-const GrassContainer = styled.div`
-    width: 950px;
-    display: grid;
-    grid-template-columns: repeat(40, 1fr); 
-    padding-left: 130px;
-    gap: 3px;
+const Wrapper = styled.div`
+    position: relative;
+    align-items: flex-start;
+    display: flex;
+`;
+
+const DayWrapper = styled.div`
+    width: 17px;
+    position: relative;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: "Inter", sans-serif;
+    color: #8c939c;
+    text-align: center;
+    display: inline-block;
+    margin-top: 20px;
+
+    & > p{
+        margin-top: 6px;
+        margin-bottom: 6px;
+    }
 `;
 
 const Title = styled.div`
@@ -32,17 +47,28 @@ const Title = styled.div`
     text-align: left;
     display: inline-block;
     font-weight: 600;
+    margin-top: 20px;
+    margin-left: 75px;
+`;
+
+// Grass 컴포넌트
+const GrassContainer = styled.div`
+    width: 875px;
+    height: 175px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 25px);
+    grid-template-rows: repeat(auto-fill, 25px);
+    align-items: center;
+    justify-items: center;
+    margin: 25px 60px;
 `;
 
 // Square 컴포넌트
 const Square = styled.div`
     width: 18px; 
     height: 18px;
-    border-radius: 5px;
-    display: flex;
     align-items: center;
-    justify-content: center;
-    color: #fff;
+    border-radius: 5px;
     background-color: ${({ color }) => color};
     transition: background-color 0.3s, transform 0.3s; /* 부드러운 전환 효과 */
     
@@ -74,7 +100,18 @@ function Wandubat(){
             <Title>
                 현재 {3}일
             </Title>
-            <Grass dailyData={dailyData} />
+            <Wrapper>
+                <DayWrapper>
+                    <p>S</p>
+                    <p>M</p>
+                    <p>T</p>
+                    <p>W</p>
+                    <p>T</p>
+                    <p>F</p>
+                    <p>S</p>
+                </DayWrapper>
+                <Grass dailyData={dailyData} />
+            </Wrapper>
         </Container>
 
     );
