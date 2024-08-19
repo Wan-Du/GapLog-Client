@@ -3,6 +3,8 @@ import styled from "styled-components";
 import TitleBar from "../components/bars/TitleBar";
 import MyPageBar from "../components/bars/MyPageBar";
 import Wandubat from "../components/user/Wandubat";
+import background from '../background.png';
+import profile from '../profile.png';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -25,6 +27,19 @@ const UserBackgroundImg = styled.div`
     }
 `;
 
+const ProfileImg = styled.div`
+    width: 45px;
+    height: 45px;
+    border-radius: 70%;
+    overflow: hidden;
+    margin-right: 16px;
+    & > img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+`
+
 const MyPageBarWrapper = styled.div`
     top: 0;
     width: calc(100% - 32px);
@@ -41,8 +56,11 @@ function MyPage({ title }) {
             <TitleBar />
             <UserBackgroundImg>
                 {/* data에서 user의 배경이미지와 연결 */}
-                <img alt="background" />
+                <img src={background} alt="back" />
             </UserBackgroundImg>
+            <ProfileImg>
+                <img src={profile} alt="profile" />
+            </ProfileImg>
             <MyPageBarWrapper>
                 <MyPageBar />
             </MyPageBarWrapper>
