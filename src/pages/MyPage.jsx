@@ -16,7 +16,7 @@ const Container = styled.div`
 `;
 
 const UserWrapper = styled.div`
-    height: 400px;
+    height: 380px;
     display: flex;
     position: relative;
     flex-direction: column;
@@ -70,11 +70,45 @@ const UserBio = styled.div`
     top: 278px;
     left: 240px;
   	font-size: 15px;
-  	font-weight: 500;
+  	font-weight: 550;
   	font-family: "Inter", sans-serif;
   	color: rgba(48, 24, 13, 0.73);
   	text-align: left;
   	display: inline-block;
+`;
+
+const FollowerWrapper = styled.div`
+    position: absolute;
+    top: 300px;
+    left: 120px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 15px;
+`;
+
+const UserFollower = styled.div`
+    width: 79px;
+    font-size: 14px;
+    font-weight: 550;
+    color: rgba(48, 24, 13, 0.73);
+    font-family: "Inter", sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > a{
+        margin-top: 2px;
+        margin-left: 10px;
+        font-weight: 700;
+        text-decoration: none;
+        color: rgba(48, 24, 13, 0.73);
+    }
+
+    & > a:hover {
+        text-decoration: underline;
+        color: "#30180D";
+    }
 `;
 
 const MyPageBarWrapper = styled.div`
@@ -153,6 +187,16 @@ function MyPage({ title }) {
                 </ProfileImg>
                 <UserId>{userData ? userData.id : 'null'}</UserId>
                 <UserBio>{userData ? userData.bio : ' '}</UserBio>
+                <FollowerWrapper>
+                    <UserFollower>
+                        <p>팔로워</p>
+                        <a href="/mypage/follower">{userData ? userData.follower : ' '}</a>
+                    </UserFollower>
+                    <UserFollower>
+                        <p>팔로잉</p>
+                        <a href="/mypage/following">{userData ? userData.following : ' '}</a>
+                    </UserFollower>
+                </FollowerWrapper>
                 <Button title="프로필 편집" className="grey" />
             </UserWrapper>
             <MyPageBarWrapper>
