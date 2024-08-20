@@ -88,13 +88,13 @@ const MyPageBarWrapper = styled.div`
 
 const TierWrapper = styled.div`
     width: 1130px;
-    height: 43px;
+    height: 60px;
     margin: 15px 0px;
 `;
 
 const TierTitle = styled.div`
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     color: ${props => props.color};
     text-align: left;
     display: inline-block;
@@ -102,11 +102,11 @@ const TierTitle = styled.div`
 
 const TierScore = styled.div`
     font-size: 15px;
-    font-weight: 300;
+    font-weight: 400;
     color: ${props => props.color};
     text-align: left;
     display: inline-block;
-    padding-left: 10px;
+    margin: 8px 8px;
 `;
 
 const TierBar = styled.div`
@@ -119,7 +119,7 @@ const TierBar = styled.div`
 const TierScoreBar = styled.div`
     height: 100%;
     width: ${props => props.width};
-    color: ${props => props.color};
+    background-color: ${props => props.color};
     border-radius: 4px;
 `;
 

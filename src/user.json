@@ -2,7 +2,7 @@
     "user": {
         "id": "jinji123",
         "bio" : "안녕하시소",
-        "tier": "Gold",
+        "tier": "Diamond",
         "score": 75,
         "profile": "https://example.com/path/to/profile.png", 
         "background": "https://example.com/path/to/background.png" 
