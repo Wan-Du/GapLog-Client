@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Button from "../style/Button";
 import TitleBar from "../components/bars/TitleBar";
@@ -6,6 +6,7 @@ import MyPageBar from "../components/bars/MyPageBar";
 import Wandubat from "../components/user/Wandubat";
 import background from '../background.png';
 import profile from '../profile.png';
+import data from '../user.json';
 
 const Container = styled.div`
     width: 100%;
@@ -85,9 +86,60 @@ const MyPageBarWrapper = styled.div`
     margin-bottom: 10px;
 `;
 
+const TierWrapper = styled.div`
+    width: 1130px;
+    height: 43px;
+    margin: 15px 0px;
+`;
+
+const TierTitle = styled.div`
+    font-size: 15px;
+    font-weight: 600;
+    color: ${props => props.color};
+    text-align: left;
+    display: inline-block;
+`;
+
+const TierScore = styled.div`
+    font-size: 15px;
+    font-weight: 300;
+    color: ${props => props.color};
+    text-align: left;
+    display: inline-block;
+    padding-left: 10px;
+`;
+
+const TierBar = styled.div`
+    width: 100%;
+    height: 23px;
+    background-color: #e0e0e0; 
+    border-radius: 4px;
+`;
+
+const TierScoreBar = styled.div`
+    height: 100%;
+    width: ${props => props.width};
+    color: ${props => props.color};
+    border-radius: 4px;
+`;
+
+const tierColors = {
+    Ruby: "#ff0062",
+    Diamond: "#00b4fc",
+    Platinum: "#27e2a4",
+    Gold: "#EC9A00", 
+    Silver: "#435f7a", 
+    Bronze: "#ad5600" 
+};
 
 
 function MyPage({ title }) {
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        setUserData(data.user);
+    }, []);
+
     return (
         <Container>
             <TitleBar />
@@ -99,13 +151,27 @@ function MyPage({ title }) {
                 <ProfileImg>
                     <img src={profile} alt="profile" />
                 </ProfileImg>
-                <UserId>jinji123</UserId>
-                <UserBio>안녕하시소</UserBio>
+                <UserId>{userData ? userData.id : 'null'}</UserId>
+                <UserBio>{userData ? userData.bio : ' '}</UserBio>
                 <Button title="프로필 편집" className="grey" />
             </UserWrapper>
             <MyPageBarWrapper>
                 <MyPageBar />
             </MyPageBarWrapper>
+            <TierWrapper>
+                {userData && (
+                    <>
+                        <TierTitle color={tierColors[userData.tier] || "#30180d"}>{userData.tier}</TierTitle>
+                        <TierScore color={tierColors[userData.tier] || "#30180d"}>{userData.score}</TierScore>
+                        <TierBar>
+                            <TierScoreBar 
+                                width={`${(userData.score / 100) * 100}%`} 
+                                color={tierColors[userData.tier] || "#30180d"}
+                            />
+                        </TierBar>
+                    </>
+                )}
+            </TierWrapper>
             <Wandubat />
         </Container>
     );
