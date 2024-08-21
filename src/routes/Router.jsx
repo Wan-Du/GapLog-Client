@@ -1,23 +1,20 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import MainPage from '../pages/MainPage'
-import MyPage from "../pages/MyPage";
+import React from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MainPage from '../pages/MainPage';
+import MyPage from '../pages/MyPage';
 
 function Router() {
-    return (
-        <BrowserRouter>
-            <Routes>
-                
-                <Route path="/" element={<MainPage title="GabLog" />} />
-                {/* test: /mypage로 임시 url 설정 */}
-                <Route path="/mypage" element={<MyPage />} />
-                <Route path="/following" element={<MainPage title="팔로잉" />} />
-                <Route path="/popular" element={<MainPage title="인기글" />} />
-            </Routes>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MainPage title="GabLog" />} />
+        {/* test: /mypage로 임시 url 설정 */}
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/following" element={<MainPage title="팔로잉" />} />
+        <Route path="/popular" element={<MainPage title="인기글" />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default Router;
-
-
