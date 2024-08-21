@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
+//mypage에서 사용
 const Container = styled.div`
     display: flex; 
     justify-content: left; 
@@ -37,10 +38,11 @@ function MyPageBar() {
         <Container>
             <Wrapper>
                 <nav>
-                    <NavItem to="/" exact>개요</NavItem>
-                    <NavItem to="/post">게시글</NavItem>
-                    <NavItem to="/scrab">스크랩</NavItem>
-                    <NavItem to="/comment">댓글</NavItem>
+                    {/* 임시 url */}
+                    <NavItem to="/mypage" exact>개요</NavItem>
+                    <NavItem to="/mypage/post">게시글</NavItem>
+                    <NavItem to="/mypage/scrab">스크랩</NavItem>
+                    <NavItem to="/mypage/comment">댓글</NavItem>
                 </nav>
             </Wrapper>
         </Container>
