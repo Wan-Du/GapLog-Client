@@ -17,7 +17,7 @@ const Container = styled.div`
     padding: 0px 20px;
 `;
 
-const Wrapper = styled.div`
+const WanduWrapper = styled.div`
     position: relative;
     align-items: flex-start;
     display: flex;
@@ -60,7 +60,7 @@ const GrassContainer = styled.div`
     grid-template-rows: repeat(auto-fill, 25px);
     align-items: center;
     justify-items: center;
-    margin: 25px 60px;
+    margin: 20px 60px;
 `;
 
 // Square 컴포넌트
@@ -75,6 +75,43 @@ const Square = styled.div`
     &:hover {
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* 그림자 효과 */
     }
+`;
+
+const BottomWrapper = styled.div`
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+`;
+
+const MaxDay = styled.div`
+    width: 130px;
+    height: 15px;
+    margin-left: 75px;
+    font-size: 12px;
+    font-family: "Inter", sans-serif;
+    color: #767676;
+    text-align: left;
+    display: inline-block;
+`;
+
+const ExampleWrapper = styled.div`
+    width: 200px;
+    position: absolute;
+    display: flex;
+    align-items: flex-start;
+    right: 8px;
+`;
+
+const Count = styled.div`
+    width: 30px;
+    height: 15px;
+    margin-left: 8px;
+    font-size: 12px;
+    color: #767676;
+    text-align: left;
+    display: inline-block;
+    font-family: "Inter", sans-serif;
 `;
 
 const Grass = ({ dailyData }) => {
@@ -100,7 +137,7 @@ function Wandubat(){
             <Title>
                 현재 {3}일
             </Title>
-            <Wrapper>
+            <WanduWrapper>
                 <DayWrapper>
                     <p>S</p>
                     <p>M</p>
@@ -111,7 +148,18 @@ function Wandubat(){
                     <p>S</p>
                 </DayWrapper>
                 <Grass dailyData={dailyData} />
-            </Wrapper>
+            </WanduWrapper>
+            <BottomWrapper>
+                <MaxDay>최장 {3}일 진지충 성공</MaxDay>
+                <ExampleWrapper>
+                    <Square color={getColor(1)} />
+                    <Count>1개</Count>
+                    <Square color={getColor(2)} />
+                    <Count>2개</Count>
+                    <Square color={getColor(3)} />
+                    <Count>3개</Count>
+                </ExampleWrapper>
+            </BottomWrapper>
         </Container>
 
     );
