@@ -122,8 +122,16 @@ const MyPageBarWrapper = styled.div`
     margin-bottom: 10px;
 `;
 
-const TierWrapper = styled.div`
+const Wrapper = styled.div`
     width: 1130px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const TierWrapper = styled.div`
+    width: 100%;
     height: 60px;
     margin: 15px 0px;
 `;
@@ -168,6 +176,23 @@ const tierColors = {
     Bronze: "#ad5600" 
 };
 
+const PostWrapper = styled.div`
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`
+
+//임시 카테고리
+const CategoryWrapper = styled.div`
+    width: 300px;
+    height: 675px;
+    position: relative;
+    margin-top: 100px;
+    margin-right: 174px;
+    background-color: yellow;
+`;
 
 function MyPage({ title }) {
     const [userData, setUserData] = useState(null);
@@ -204,22 +229,28 @@ function MyPage({ title }) {
             <MyPageBarWrapper>
                 <MyPageBar />
             </MyPageBarWrapper>
-            <TierWrapper>
-                {userData && (
-                    <>
-                        <TierTitle color={tierColors[userData.tier] || "#30180d"}>{userData.tier}</TierTitle>
-                        <TierScore color={tierColors[userData.tier] || "#30180d"}>{userData.score}</TierScore>
-                        <TierBar>
-                            <TierScoreBar 
-                                width={`${(userData.score / 100) * 100}%`} 
-                                color={tierColors[userData.tier] || "#30180d"}
-                            />
-                        </TierBar>
-                    </>
-                )}
-            </TierWrapper>
-            <Wandubat />
-            <PostList posts={post} pageType="mypage"/>
+            
+            <Wrapper>
+                <TierWrapper>
+                    {userData && (
+                        <>
+                            <TierTitle color={tierColors[userData.tier] || "#30180d"}>{userData.tier}</TierTitle>
+                            <TierScore color={tierColors[userData.tier] || "#30180d"}>{userData.score}</TierScore>
+                            <TierBar>
+                                <TierScoreBar 
+                                    width={`${(userData.score / 100) * 100}%`} 
+                                    color={tierColors[userData.tier] || "#30180d"}
+                                />
+                            </TierBar>
+                        </>
+                    )}
+                </TierWrapper>
+                <Wandubat />
+                <PostWrapper>
+                    <CategoryWrapper>나중에 카테고리</CategoryWrapper>
+                    <PostList posts={post} pageType="mypage"/>
+                </PostWrapper>
+            </Wrapper>
         </Container>
     );
 }
