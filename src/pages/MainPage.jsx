@@ -39,7 +39,7 @@ function MainPage({ title }) {
             </MainBarWrapper>
             <ContentWrapper>
                 {/* data.json에서 하나의 post를 mapping할 수 있도록 연결 */}
-                <PostList posts={data} />
+                <PostList posts={data} pageType="main" />
             </ContentWrapper>
         </Wrapper>
     );

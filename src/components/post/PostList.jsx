@@ -10,7 +10,7 @@ const Container = styled.div`
 
 const Wrapper = styled.div`
     display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
+    grid-template-columns: ${({ columns }) => `repeat(${columns}, 1fr)`};
     gap: 16px; 
     row-gap: 30px;
     justify-items: center; 
@@ -19,12 +19,14 @@ const Wrapper = styled.div`
 `;
 
 function PostList(props) {
-    const { posts, onClickItem } = props;
+    const { posts, onClickItem, pageType } = props;
+
+    const columns = pageType === 'mypage' ? 2 : 3;
 
     return (
         <Container>
-            <Wrapper>
-                {posts.map((post, index) => {
+            <Wrapper columns={columns}>
+                {posts.map((post) => {
                     return (
                         <PostItem
                             key={post.id}
