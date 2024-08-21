@@ -1,45 +1,66 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../../style/Button";
-import SearchIcon from '@mui/icons-material/Search';
-import IconButton from "@mui/material/IconButton";
+import { FiSearch, FiBell, FiSend} from "react-icons/fi";
 
 //전체 모든 페이지에서 보여지는 gaplog 제목 bar
-const Wrapper = styled.div`
-    width: calc(100% - 32px);
-    max-width: 1200px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+const Container = styled.div`
+  width: calc(100% - 32px);
+  max-width: 1200px;
+  height: 40px;
+  margin: 10px 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
 `;
 
 const MainTitleText = styled.div`
-    font-size: 24px;
-    color: #30180d;
-    font-family: "Russo One", Helvetica;
-    font-weight: 400;
-    margin: 0 auto;
-    padding-left: 157px;
+  font-size: 24px;
+  color: #30180d;
+  font-family: "Russo One", Helvetica;
+  font-weight: 400;
+  margin: 0 auto;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  position: absolute;
+  right: 0;
 `;
 
 const LoginButton = styled(Button)`
-    margin-left: 0 auto;
+  margin-left: 0 auto;
 `;
 
 function TitleBar(props){
-    return(
-        <Wrapper>
-          <MainTitleText>GapLog</MainTitleText>
-          <IconButton sx={{ 
-            color: "#111111",
-            fontSize: '35px', 
-          }}>
-            <SearchIcon />
-          </IconButton>
-          <LoginButton title="로그인"></LoginButton>
-        </Wrapper>
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
+
+  useEffect(() => {
+    //api 호출한 뒤 로그인 상태 확인 예정
+  });
+
+  return(
+    <Container>
+      <MainTitleText>GapLog</MainTitleText>
+      <ButtonWrapper>
+        <FiSearch size="22" />
+        {!isLoggedIn ? (
+          <LoginButton title="로그인">로그인</LoginButton>
+          ) : (
+          <>
+            <FiBell size="22" />
+            <FiSend size="22" />
+            <LoginButton title="새 글 작성">새 글 작성</LoginButton>
+          </>
+        )}
+      </ButtonWrapper>
+    </Container>
     );
 
 }
