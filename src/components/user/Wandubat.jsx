@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import wanduData from '../../wandu.json';
 
@@ -18,7 +19,7 @@ const getColor = (value) => {
 
 const Container = styled.div`
   width: 1090px;
-  height: 320px;
+  height: 350px;
   background-color: #f4f4f4;
   display: block;
   padding: 0px 20px;
@@ -40,10 +41,11 @@ const DayWrapper = styled.div`
   text-align: center;
   display: inline-block;
   margin-top: 20px;
+  margin-left: 50px;
 
   & > p {
-    margin-top: 6px;
-    margin-bottom: 6px;
+    margin-top: 7.5px;
+    margin-bottom: 7px;
   }
 `;
 
@@ -55,16 +57,16 @@ const Title = styled.div`
   display: inline-block;
   font-weight: 600;
   margin-top: 20px;
-  margin-left: 75px;
+  margin-left: 125px;
 `;
 
 // Grass 컴포넌트
 const GrassContainer = styled.div`
   width: 875px;
-  height: 175px;
+  height: 200px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 25px);
-  grid-template-rows: repeat(auto-fill, 25px);
+  grid-template-columns: repeat(auto-fill, 30px);
+  grid-template-rows: repeat(auto-fill, 28px);
   align-items: center;
   justify-items: center;
   margin: 20px 60px;
@@ -72,8 +74,8 @@ const GrassContainer = styled.div`
 
 // Square 컴포넌트
 const Square = styled.div`
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   align-items: center;
   border-radius: 5px;
   background-color: ${({ color }) => color};
@@ -96,7 +98,7 @@ const BottomWrapper = styled.div`
 const MaxDay = styled.div`
   width: 130px;
   height: 15px;
-  margin-left: 75px;
+  margin-left: 125px;
   font-size: 12px;
   font-family: 'Inter', sans-serif;
   color: #767676;
@@ -109,7 +111,7 @@ const ExampleWrapper = styled.div`
   position: absolute;
   display: flex;
   align-items: flex-start;
-  right: 8px;
+  right: 63px;
 `;
 
 const Count = styled.div`
@@ -169,5 +171,9 @@ function Wandubat() {
     </Container>
   );
 }
+
+Grass.propTypes = {
+  dailyData: PropTypes.object.isRequired,
+};
 
 export default Wandubat;
