@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Button from '../../style/Button';
 import { FiSearch, FiBell, FiSend } from 'react-icons/fi';
+import DmAlertPage from '../../pages/DmAlertPage';
 
 //전체 모든 페이지에서 보여지는 gaplog 제목 bar
 const Container = styled.div`
@@ -13,6 +14,7 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   position: relative;
+  z-index: 1000;
 `;
 
 const MainTitleText = styled.div`
@@ -40,10 +42,19 @@ const LoginButton = styled(Button)`
 
 function TitleBar(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     //api 호출한 뒤 로그인 상태 확인 예정
   });
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <Container>
@@ -55,11 +66,12 @@ function TitleBar(props) {
         ) : (
           <>
             <FiBell size="22" />
-            <FiSend size="22" />
+            <FiSend size="22" onClick={openModal} />
             <LoginButton title="새 글 작성">새 글 작성</LoginButton>
           </>
         )}
       </ButtonWrapper>
+      <DmAlertPage isOpen={isModalOpen} onClose={closeModal} />
     </Container>
   );
 }

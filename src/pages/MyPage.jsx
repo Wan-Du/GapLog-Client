@@ -117,7 +117,7 @@ const MyPageBarWrapper = styled.div`
   top: 0;
   width: calc(100% - 32px);
   max-width: 1200px;
-  z-index: 1000;
+  z-index: 0;
   background-color: white;
   margin-bottom: 10px;
 `;
