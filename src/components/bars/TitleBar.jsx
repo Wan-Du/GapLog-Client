@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Button from "../../style/Button";
-import { FiSearch, FiBell, FiSend} from "react-icons/fi";
+import { FiSearch, FiBell, FiSend } from "react-icons/fi";
 
 //전체 모든 페이지에서 보여지는 gaplog 제목 bar
 const Container = styled.div`
@@ -27,9 +27,9 @@ const MainTitleText = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  display: flex; 
-  align-items: center; 
-  gap: 10px; 
+  display: flex;
+  align-items: center;
+  gap: 10px;
   position: absolute;
   right: 0;
 `;
@@ -38,21 +38,21 @@ const LoginButton = styled(Button)`
   margin-left: 0 auto;
 `;
 
-function TitleBar(props){
+function TitleBar(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   useEffect(() => {
     //api 호출한 뒤 로그인 상태 확인 예정
   });
 
-  return(
+  return (
     <Container>
       <MainTitleText>GapLog</MainTitleText>
       <ButtonWrapper>
         <FiSearch size="22" />
         {!isLoggedIn ? (
           <LoginButton title="로그인">로그인</LoginButton>
-          ) : (
+        ) : (
           <>
             <FiBell size="22" />
             <FiSend size="22" />
@@ -61,8 +61,7 @@ function TitleBar(props){
         )}
       </ButtonWrapper>
     </Container>
-    );
-
+  );
 }
 
 export default TitleBar;
