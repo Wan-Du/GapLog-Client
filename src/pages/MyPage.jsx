@@ -168,21 +168,30 @@ const TierScoreBar = styled.div`
 `;
 
 const TierTitleColors = {
-  Ruby: '#ff0062',
-  Diamond: '#00b4fc',
-  Platinum: '#27e2a4',
-  Gold: '#EC9A00',
-  Silver: '#435f7a',
-  Bronze: '#ad5600',
+  1: '#ff0062',
+  2: '#00b4fc',
+  3: '#27e2a4',
+  4: '#EC9A00',
+  5: '#435f7a',
+  6: '#ad5600',
 };
 
 const TierBarColors = {
-  Ruby: '#E99191',
-  Diamond: '#84D9FB',
-  Platinum: '#7FDFBF',
-  Gold: '#EFBC5C',
-  Silver: '#7491AC',
-  Bronze: '#C38445',
+  1: '#E99191',
+  2: '#84D9FB',
+  3: '#7FDFBF',
+  4: '#EFBC5C',
+  5: '#7491AC',
+  6: '#C38445',
+};
+
+const TierNames = {
+  1: 'Ruby',
+  2: 'Diamond',
+  3: 'Platinum',
+  4: 'Gold',
+  5: 'Silver',
+  6: 'Bronze',
 };
 
 const PostWrapper = styled.div`
@@ -246,7 +255,7 @@ function MyPage() {
           {userData && (
             <>
               <TierTitle color={TierTitleColors[userData.tier] || '#30180d'}>
-                {userData.tier}
+                {TierNames[userData.tier] || 'Unknown Tier'}
               </TierTitle>
               <TierScore color={TierTitleColors[userData.tier] || '#30180d'}>
                 {userData.score}
