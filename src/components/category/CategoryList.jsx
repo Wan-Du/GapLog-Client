@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import React, { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
 // 카테고리 컴포넌트
 const CategoryContainer = styled.div`
@@ -9,7 +9,7 @@ const CategoryContainer = styled.div`
   background-color: #f3f3f3;
   border-radius: 8px;
   padding: 10px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 800;
 `;
 
@@ -44,13 +44,13 @@ function Category({ onSelectCategory }) {
     try {
       const response = await fetch(
         // To Do: 사용자 ID를 동적으로 변경
-        "http://localhost:8080/api/category/users/1"
+        'http://localhost:8080/api/category/users/1'
       );
       const data = await response.json();
-      console.log("Categories Data:", data);
+      console.log('Categories Data:', data);
       setCategories(data);
     } catch (error) {
-      console.error("Error fetching categories:", error);
+      console.error('Error fetching categories:', error);
     }
   };
 
@@ -63,17 +63,17 @@ function Category({ onSelectCategory }) {
       const response = await fetch(
         `http://localhost:8080/api/category/${categoryId}`,
         {
-          method: "GET",
+          method: 'GET',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
       // To Do: 받아온 게시글 데이터로 페이지 렌더링
       const data = await response.json();
-      console.log("Post Data:", data);
+      console.log('Post Data:', data);
     } catch (error) {
-      console.error("Error fetching category data:", error);
+      console.error('Error fetching category data:', error);
     }
   };
 
