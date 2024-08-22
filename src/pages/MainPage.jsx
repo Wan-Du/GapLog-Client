@@ -29,7 +29,7 @@ const MainBarWrapper = styled.div`
   background-color: white;
 `;
 
-function MainPage({ title }) {
+function MainPage() {
   return (
     <Wrapper>
       <TitleBar />

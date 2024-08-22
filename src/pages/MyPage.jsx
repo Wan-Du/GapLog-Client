@@ -167,13 +167,22 @@ const TierScoreBar = styled.div`
   border-radius: 4px;
 `;
 
-const tierColors = {
+const TierTitleColors = {
   Ruby: '#ff0062',
   Diamond: '#00b4fc',
   Platinum: '#27e2a4',
   Gold: '#EC9A00',
   Silver: '#435f7a',
   Bronze: '#ad5600',
+};
+
+const TierBarColors = {
+  Ruby: '#E99191',
+  Diamond: '#84D9FB',
+  Platinum: '#7FDFBF',
+  Gold: '#EFBC5C',
+  Silver: '#7491AC',
+  Bronze: '#C38445',
 };
 
 const PostWrapper = styled.div`
@@ -194,7 +203,7 @@ const CategoryWrapper = styled.div`
   background-color: yellow;
 `;
 
-function MyPage({ title }) {
+function MyPage() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -236,16 +245,16 @@ function MyPage({ title }) {
         <TierWrapper>
           {userData && (
             <>
-              <TierTitle color={tierColors[userData.tier] || '#30180d'}>
+              <TierTitle color={TierTitleColors[userData.tier] || '#30180d'}>
                 {userData.tier}
               </TierTitle>
-              <TierScore color={tierColors[userData.tier] || '#30180d'}>
+              <TierScore color={TierTitleColors[userData.tier] || '#30180d'}>
                 {userData.score}
               </TierScore>
               <TierBar>
                 <TierScoreBar
                   width={`${(userData.score / 100) * 100}%`}
-                  color={tierColors[userData.tier] || '#30180d'}
+                  color={TierBarColors[userData.tier] || '#30180d'}
                 />
               </TierBar>
             </>
