@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Button from "../../style/Button";
-import { FiSearch, FiBell, FiSend } from "react-icons/fi";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import Button from '../../style/Button';
+import { FiSearch, FiBell, FiSend } from 'react-icons/fi';
 
 //전체 모든 페이지에서 보여지는 gaplog 제목 bar
 const Container = styled.div`
@@ -18,7 +18,7 @@ const Container = styled.div`
 const MainTitleText = styled.div`
   font-size: 24px;
   color: #30180d;
-  font-family: "Russo One", Helvetica;
+  font-family: 'Russo One', Helvetica;
   font-weight: 400;
   margin: 0 auto;
   position: absolute;

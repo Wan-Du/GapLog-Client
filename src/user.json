@@ -1,13 +1,12 @@
 {
-    "user": {
-        "id": "jinji123",
-        "bio" : "안녕하시소",
-        "tier": "Diamond",
-        "score": 75,
-        "follower": 20,
-        "following": 35,
-        "profile": "https://example.com/path/to/profile.png", 
-        "background": "https://example.com/path/to/background.png" 
-    }
+  "user": {
+    "id": "jinji123",
+    "bio": "안녕하시소",
+    "tier": 1,
+    "score": 75,
+    "follower": 20,
+    "following": 35,
+    "profile": "https://example.com/path/to/profile.png",
+    "background": "https://example.com/path/to/background.png"
+  }
 }
-  

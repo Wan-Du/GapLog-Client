@@ -1,6 +1,6 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
 
 //mypage에서 사용
 const Container = styled.div`
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
   height: 50px;
   font-size: 18px;
   color: #30180d;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 800;
 `;
 

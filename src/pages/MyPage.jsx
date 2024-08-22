@@ -59,7 +59,7 @@ const UserId = styled.div`
   position: absolute;
   top: 270px;
   left: 122px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 27px;
   display: inline-block;
@@ -74,7 +74,7 @@ const UserBio = styled.div`
   left: 240px;
   font-size: 15px;
   font-weight: 550;
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   color: rgba(48, 24, 13, 0.73);
   text-align: left;
   display: inline-block;
@@ -95,7 +95,7 @@ const UserFollower = styled.div`
   font-size: 14px;
   font-weight: 550;
   color: rgba(48, 24, 13, 0.73);
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -110,7 +110,7 @@ const UserFollower = styled.div`
 
   & > a:hover {
     text-decoration: underline;
-    color: "#30180D";
+    color: '#30180D';
   }
 `;
 
@@ -168,13 +168,31 @@ const TierScoreBar = styled.div`
   border-radius: 4px;
 `;
 
-const tierColors = {
-  Ruby: "#ff0062",
-  Diamond: "#00b4fc",
-  Platinum: "#27e2a4",
-  Gold: "#EC9A00",
-  Silver: "#435f7a",
-  Bronze: "#ad5600",
+const TierTitleColors = {
+  1: '#ff0062',
+  2: '#00b4fc',
+  3: '#27e2a4',
+  4: '#EC9A00',
+  5: '#435f7a',
+  6: '#ad5600',
+};
+
+const TierBarColors = {
+  1: '#E99191',
+  2: '#84D9FB',
+  3: '#7FDFBF',
+  4: '#EFBC5C',
+  5: '#7491AC',
+  6: '#C38445',
+};
+
+const TierNames = {
+  1: 'Ruby',
+  2: 'Diamond',
+  3: 'Platinum',
+  4: 'Gold',
+  5: 'Silver',
+  6: 'Bronze',
 };
 
 const PostWrapper = styled.div`
@@ -185,7 +203,17 @@ const PostWrapper = styled.div`
   align-items: center;
 `;
 
-function MyPage({ title }) {
+//임시 카테고리
+const CategoryWrapper = styled.div`
+  width: 300px;
+  height: 675px;
+  position: relative;
+  margin-top: 100px;
+  margin-right: 174px;
+  background-color: yellow;
+`;
+
+function MyPage() {
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
@@ -203,17 +231,17 @@ function MyPage({ title }) {
         <ProfileImg>
           <img src={profile} alt="profile" />
         </ProfileImg>
-        <UserId>{userData ? userData.id : "null"}</UserId>
-        <UserBio>{userData ? userData.bio : " "}</UserBio>
+        <UserId>{userData ? userData.id : 'null'}</UserId>
+        <UserBio>{userData ? userData.bio : ' '}</UserBio>
         <FollowerWrapper>
           <UserFollower>
             <p>팔로워</p>
-            <a href="/mypage/follower">{userData ? userData.follower : " "}</a>
+            <a href="/mypage/follower">{userData ? userData.follower : ' '}</a>
           </UserFollower>
           <UserFollower>
             <p>팔로잉</p>
             <a href="/mypage/following">
-              {userData ? userData.following : " "}
+              {userData ? userData.following : ' '}
             </a>
           </UserFollower>
         </FollowerWrapper>
@@ -227,16 +255,16 @@ function MyPage({ title }) {
         <TierWrapper>
           {userData && (
             <>
-              <TierTitle color={tierColors[userData.tier] || "#30180d"}>
-                {userData.tier}
+              <TierTitle color={TierTitleColors[userData.tier] || '#30180d'}>
+                {TierNames[userData.tier] || 'Unknown Tier'}
               </TierTitle>
-              <TierScore color={tierColors[userData.tier] || "#30180d"}>
+              <TierScore color={TierTitleColors[userData.tier] || '#30180d'}>
                 {userData.score}
               </TierScore>
               <TierBar>
                 <TierScoreBar
                   width={`${(userData.score / 100) * 100}%`}
-                  color={tierColors[userData.tier] || "#30180d"}
+                  color={TierBarColors[userData.tier] || '#30180d'}
                 />
               </TierBar>
             </>
