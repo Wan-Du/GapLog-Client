@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import Button from '../style/Button';
-import PostList from '../components/post/PostList';
-import TitleBar from '../components/bars/TitleBar';
-import MyPageBar from '../components/bars/MyPageBar';
-import Wandubat from '../components/user/Wandubat';
-import background from '../background.png';
-import profile from '../profile.png';
-import data from '../user.json';
-import post from '../data.json';
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Button from "../style/Button";
+import PostList from "../components/post/PostList";
+import TitleBar from "../components/bars/TitleBar";
+import MyPageBar from "../components/bars/MyPageBar";
+import Wandubat from "../components/user/Wandubat";
+import background from "../background.png";
+import profile from "../profile.png";
+import data from "../user.json";
+import post from "../data.json";
+import Category from "../components/category/CategoryList";
 
 const Container = styled.div`
   width: 100%;
@@ -271,7 +272,7 @@ function MyPage() {
         </TierWrapper>
         <Wandubat />
         <PostWrapper>
-          <CategoryWrapper>나중에 카테고리</CategoryWrapper>
+          <Category />
           <PostList posts={post} pageType="mypage" />
         </PostWrapper>
       </Wrapper>
