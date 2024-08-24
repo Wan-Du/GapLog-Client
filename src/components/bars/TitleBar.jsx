@@ -60,13 +60,13 @@ function TitleBar(props) {
     setIsModalOpen(false);
   };
 
-  const handleTitleClick = () => {
+  const handleClick = () => {
     if (location.pathname != '/') nav('/');
   };
 
   return (
     <Container>
-      <MainTitleText onClick={handleTitleClick}>GapLog</MainTitleText>
+      <MainTitleText onClick={handleClick}>GapLog</MainTitleText>
       <ButtonWrapper>
         <FiSearch size="22" />
         {!isLoggedIn ? (

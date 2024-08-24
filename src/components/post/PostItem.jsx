@@ -110,12 +110,12 @@ function PostItem(props) {
   const nav = useNavigate();
   const location = useLocation();
 
-  const handleTitleClick = () => {
-    if (location.pathname != '/') nav('/');
+  const handleClick = () => {
+    if (location.pathname != `/posts/${post.id}`) nav(`/posts/${post.id}`);
   };
 
   return (
-    <Container onClick={onClick}>
+    <Container onClick={handleClick}>
       <UserWrapper>
         <ProfileImg>
           <img src={post.userprofile} alt="profile" />
