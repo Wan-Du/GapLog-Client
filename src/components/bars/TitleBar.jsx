@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../../style/Button';
 import { FiSearch, FiBell, FiSend } from 'react-icons/fi';
@@ -26,6 +27,7 @@ const MainTitleText = styled.div`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  cursor: pointer;
 `;
 
 const ButtonWrapper = styled.div`
@@ -43,6 +45,8 @@ const LoginButton = styled(Button)`
 function TitleBar(props) {
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const nav = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     //api 호출한 뒤 로그인 상태 확인 예정
@@ -56,9 +60,13 @@ function TitleBar(props) {
     setIsModalOpen(false);
   };
 
+  const handleTitleClick = () => {
+    if (location.pathname != '/') nav('/');
+  };
+
   return (
     <Container>
-      <MainTitleText>GapLog</MainTitleText>
+      <MainTitleText onClick={handleTitleClick}>GapLog</MainTitleText>
       <ButtonWrapper>
         <FiSearch size="22" />
         {!isLoggedIn ? (
