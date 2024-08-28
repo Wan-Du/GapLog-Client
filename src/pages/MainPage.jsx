@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import data from '../data.json';
 import PostList from '../components/post/PostList';
 import MainBar from '../components/bars/MainBar';
 import TitleBar from '../components/bars/TitleBar';
@@ -30,6 +29,27 @@ const MainBarWrapper = styled.div`
 `;
 
 function MainPage() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/posts');
+        const data = await response.json();
+        console.log('Posts Data: ', data);
+        setPosts(data); // API로부터 받은 데이터를 state에 저장
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
     <Wrapper>
       <TitleBar />
@@ -37,8 +57,7 @@ function MainPage() {
         <MainBar />
       </MainBarWrapper>
       <ContentWrapper>
-        {/* data.json에서 하나의 post를 mapping할 수 있도록 연결 */}
-        <PostList posts={data} pageType="main" />
+        <PostList posts={posts} pageType="main" />
       </ContentWrapper>
     </Wrapper>
   );
