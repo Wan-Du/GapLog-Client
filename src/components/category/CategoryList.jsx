@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 // 카테고리 컴포넌트
 const CategoryContainer = styled.div`
-  width: 219px;
+  width: 300px;
   height: 675px;
   background-color: #f3f3f3;
   border-radius: 8px;

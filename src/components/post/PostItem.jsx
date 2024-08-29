@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiHeart, FiMessageCircle, FiStar, FiMeh } from 'react-icons/fi';
 
@@ -10,9 +11,6 @@ const Container = styled.div`
   box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.04);
   justify-content: left;
   cursor: pointer;
-  :hover {
-    background: lightgrey;
-  }
 `;
 
 //User(프로필 이미지, user id, post 작성한 시간)
@@ -109,8 +107,15 @@ const MainText = styled.p`
 
 function PostItem(props) {
   const { post, onClick } = props;
+  const nav = useNavigate();
+  const location = useLocation();
+
+  const handleClick = () => {
+    if (location.pathname != `/posts/${post.id}`) nav(`/posts/${post.id}`);
+  };
+
   return (
-    <Container onClick={onClick}>
+    <Container onClick={handleClick}>
       <UserWrapper>
         <ProfileImg>
           <img src={post.userprofile} alt="profile" />
@@ -126,13 +131,13 @@ function PostItem(props) {
 
       <IconWrapper>
         <FiHeart size="20" />
-        <IconCount>{12}</IconCount>
+        <IconCount>{post.likes}</IconCount>
         <FiMessageCircle size="20" />
-        <IconCount>{12}</IconCount>
+        <IconCount>{post.comments}</IconCount>
         <FiStar size="20" />
-        <IconCount>{12}</IconCount>
+        <IconCount>{post.scrapCount}</IconCount>
         <FiMeh size="20" />
-        <IconCount>{12}</IconCount>
+        <IconCount>{post.SeriousnessCount}</IconCount>
       </IconWrapper>
       <TitleText>{post.title}</TitleText>
       <MainText>{post.content}</MainText>

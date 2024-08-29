@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Button from "../style/Button";
-import PostList from "../components/post/PostList";
-import TitleBar from "../components/bars/TitleBar";
-import MyPageBar from "../components/bars/MyPageBar";
-import Wandubat from "../components/user/Wandubat";
-import background from "../background.png";
-import profile from "../profile.png";
-import data from "../user.json";
-import post from "../data.json";
-import Category from "../components/category/CategoryList";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Button from '../style/Button';
+import PostList from '../components/post/PostList';
+import TitleBar from '../components/bars/TitleBar';
+import MyPageBar from '../components/bars/MyPageBar';
+import Wandubat from '../components/user/Wandubat';
+import background from '../background.png';
+import profile from '../profile.png';
+import data from '../user.json';
+import Category from '../components/category/CategoryList';
 
 const Container = styled.div`
   width: 100%;
@@ -118,7 +117,7 @@ const MyPageBarWrapper = styled.div`
   top: 0;
   width: calc(100% - 32px);
   max-width: 1200px;
-  z-index: 1000;
+  z-index: 0;
   background-color: white;
   margin-bottom: 10px;
 `;
@@ -210,7 +209,6 @@ const CategoryWrapper = styled.div`
   position: relative;
   margin-top: 100px;
   margin-right: 174px;
-  background-color: yellow;
 `;
 
 function MyPage() {
@@ -272,8 +270,9 @@ function MyPage() {
         </TierWrapper>
         <Wandubat />
         <PostWrapper>
-          <Category />
-          <PostList posts={post} pageType="mypage" />
+          <CategoryWrapper>
+            <Category />
+          </CategoryWrapper>
         </PostWrapper>
       </Wrapper>
     </Container>

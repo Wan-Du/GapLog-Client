@@ -67,6 +67,7 @@ const GrassContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, 30px);
   grid-template-rows: repeat(auto-fill, 28px);
+  grid-auto-flow: column;
   align-items: center;
   justify-items: center;
   margin: 20px 60px;

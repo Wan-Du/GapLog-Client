@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MainPage from '../pages/MainPage';
 import MyPage from '../pages/MyPage';
+import ViewPostPage from '../pages/ViewPostPage';
 
 function Router() {
   return (
@@ -12,6 +13,7 @@ function Router() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/following" element={<MainPage title="팔로잉" />} />
         <Route path="/popular" element={<MainPage title="인기글" />} />
+        <Route path="/posts/:postId" element={<ViewPostPage />} />
       </Routes>
     </BrowserRouter>
   );
