@@ -131,9 +131,9 @@ function PostItem(props) {
 
       <IconWrapper>
         <FiHeart size="20" />
-        <IconCount>{post.likeCount}</IconCount>
+        <IconCount>{post.likes}</IconCount>
         <FiMessageCircle size="20" />
-        <IconCount>{12}</IconCount>
+        <IconCount>{post.comments}</IconCount>
         <FiStar size="20" />
         <IconCount>{post.scrapCount}</IconCount>
         <FiMeh size="20" />

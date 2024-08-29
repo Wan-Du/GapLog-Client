@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import background from '../background.png';
+import { FiHeart, FiMessageCircle, FiStar, FiMeh } from 'react-icons/fi';
+import CommentList from '../components/comment/CommentList';
 
 const Container = styled.div`
   width: calc(100% - 32px);
@@ -86,6 +88,25 @@ const PostImg = styled.div`
   }
 `;
 
+const IconWrapper = styled.div`
+  width: 100%;
+  height: 24px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  color: #767676;
+`;
+
+const IconCount = styled.div`
+  margin-left: 5px;
+  margin-right: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #767676;
+`;
+
 function ViewPostPage() {
   const { postId } = useParams(); // URL 파라미터에서 postId 가져오기
   const [post, setPost] = useState(null);
@@ -119,7 +140,37 @@ function ViewPostPage() {
   }
 
   if (error) {
-    return <div>error</div>;
+    return (
+      <Container>
+        <UserWrapper>
+          <ProfileImg>
+            <img src={background} alt="profile" />
+          </ProfileImg>
+          <UserInfo>
+            <UserId>jinji123</UserId>
+            <Date>어제 13:05</Date>
+          </UserInfo>
+        </UserWrapper>
+        <ContentWrapper>
+          <TitleText>리액트에서 리스트 렌더링하기</TitleText>
+          <MainText>안녕안녕안녕</MainText>
+        </ContentWrapper>
+        <PostImg>
+          <img src={background} alt="profile" />
+        </PostImg>
+        <IconWrapper>
+          <FiHeart size="24" />
+          <IconCount>{2}</IconCount>
+          <FiMessageCircle size="24" />
+          <IconCount>{2}</IconCount>
+          <FiStar size="24" />
+          <IconCount>{2}</IconCount>
+          <FiMeh size="24" />
+          <IconCount>{2}</IconCount>
+        </IconWrapper>
+        <CommentList postId={postId}></CommentList>
+      </Container>
+    );
   }
 
   if (!post) {
