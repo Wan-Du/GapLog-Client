@@ -146,7 +146,7 @@ function ViewPostPage() {
     const fetchPost = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8080/api/posts/${postId}`
+          `http://3.37.43.129:3000/api/posts/${postId}`
         ); // API URL 수정
         if (!response.ok) {
           throw new Error('Network response was not ok');
