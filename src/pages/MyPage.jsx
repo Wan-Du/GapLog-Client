@@ -8,7 +8,6 @@ import Wandubat from '../components/user/Wandubat';
 import background from '../background.png';
 import profile from '../profile.png';
 import data from '../user.json';
-import post from '../data.json';
 import Category from '../components/category/CategoryList';
 
 const Container = styled.div`
@@ -274,7 +273,6 @@ function MyPage() {
           <CategoryWrapper>
             <Category />
           </CategoryWrapper>
-          <PostList posts={post} pageType="mypage" />
         </PostWrapper>
       </Wrapper>
     </Container>
