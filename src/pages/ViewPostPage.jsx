@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import background from '../background.png';
 import { FiHeart, FiMessageCircle, FiStar, FiMeh } from 'react-icons/fi';
+import TitleBar from '../components/bars/TitleBar';
 import CommentList from '../components/comment/CommentList';
 import CropOriginalIcon from '@mui/icons-material/CropOriginal';
 import IconButton from '@mui/material/IconButton';
@@ -14,7 +15,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding-top: 50px;
 `;
 
 const ContentWrapper = styled.div`
@@ -178,6 +178,7 @@ function ViewPostPage() {
 
   return (
     <Container>
+      <TitleBar />
       <UserWrapper>
         <ProfileImg>
           <img src={post.username} alt="profile" />
