@@ -11,7 +11,7 @@ import data from '../user.json';
 import Category from '../components/category/CategoryList';
 
 const Container = styled.div`
-  width: 100%;
+  width: calc(100% - 32px);
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -36,7 +36,7 @@ function MainPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/posts');
+        const response = await fetch('http://3.37.43.129/api/posts');
         const data = await response.json();
         console.log('Posts Data: ', data);
         setPosts(data); // API로부터 받은 데이터를 state에 저장

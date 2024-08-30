@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TitleBar from '../components/bars/TitleBar';
 import Button from '../style/Button';
+
 const Container = styled.div`
   width: calc(100% - 32px);
   max-width: 1200px;
