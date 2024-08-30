@@ -1,8 +1,16 @@
 //게시글 작성 page
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import TitleBar from '../components/bars/TitleBar';
 import Button from '../style/Button';
+import FormatBoldOutlinedIcon from '@mui/icons-material/FormatBoldOutlined';
+import FormatItalicOutlinedIcon from '@mui/icons-material/FormatItalicOutlined';
+import FormatStrikethroughOutlinedIcon from '@mui/icons-material/FormatStrikethroughOutlined';
+import FormatQuoteOutlinedIcon from '@mui/icons-material/FormatQuoteOutlined';
+import InsertLinkOutlinedIcon from '@mui/icons-material/InsertLinkOutlined';
+import CodeOutlinedIcon from '@mui/icons-material/CodeOutlined';
+import CropOriginalIcon from '@mui/icons-material/CropOriginal';
+import IconButton from '@mui/material/IconButton';
 
 const Container = styled.div`
   width: calc(100% - 32px);
@@ -23,9 +31,16 @@ const TitleField = styled.input`
   font-weight: bold;
 `;
 
+const TagContainer = styled.div`
+  width: calc(100% - 32px);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
 const TagField = styled.input`
+  min-width: 542px;
   height: 30px;
-  width: 542px;
   margin: 18px 0;
   outline: none;
   border: none;
@@ -37,7 +52,6 @@ const TagField = styled.input`
 const Tag = styled.span`
   display: inline-block;
   padding: 5px 10px;
-  margin: 5px;
   background-color: #eeddbb;
   color: black;
   border-radius: 100px;
@@ -62,6 +76,17 @@ const ToolLine = styled.div`
   background: #dee2e6;
 `;
 
+const ToolButton = styled.button`
+  height: 24px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: #c4c4c4;
+  cursor: pointer;
+`;
+
 const MainField = styled.textarea`
   height: 500px;
   width: 100%;
@@ -79,20 +104,13 @@ const BottomBar = styled.div`
   max-width: 1200px;
   height: 40px;
   margin: 10px 0px;
+  padding: 10px 0px;
+  border-top: 1px solid #c4c4c4;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
   z-index: 1000;
-`;
-
-const ButtonWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: absolute;
-  right: 0;
-  cursor: pointer;
 `;
 
 const BackButton = styled.button`
@@ -114,6 +132,9 @@ function WritePostPage() {
   const [tags, setTags] = useState([]);
   const [tagInput, setTagInput] = useState('');
   const [main, setMain] = useState('');
+  const mainFieldRef = useRef(null);
+
+  //useRef hook : 참조 관리, mutable 객체 반환, 리렌더링 시 변화 x
 
   const handleTitleChange = (e) => {
     setTitle(e.target.value);
@@ -128,10 +149,26 @@ function WritePostPage() {
       setTags((prevTags) => [...prevTags, tagInput.trim()]);
       setTagInput('');
     }
+
+    if (e.key === 'Backspace' && tagInput === '') {
+      setTags((prevTags) => prevTags.slice(0, -1)); // 마지막 태그 삭제
+    }
   };
 
   const handleMainChange = (e) => {
     setMain(e.target.value);
+  };
+
+  const addHeader = (level) => {
+    const markdownHeader = `${'#'.repeat(level)} `;
+    setMain((prevMain) => prevMain + markdownHeader);
+
+    setTimeout(() => {
+      const textarea = mainFieldRef.current;
+      textarea.focus();
+      const cursorPosition = markdownHeader.length + main.length; // 커서 위치
+      textarea.setSelectionRange(cursorPosition, cursorPosition);
+    }, 0);
   };
 
   return (
@@ -143,22 +180,88 @@ function WritePostPage() {
         value={title}
         placeholder="제목을 입력하세요"
       />
-      <TagField
-        type="text"
-        value={tagInput}
-        onChange={handleTagChange}
-        onKeyDown={handleKeyDown}
-        placeholder="태그 입력 후 엔터 키를 누르세요"
-      />
-      <div>
+      <TagContainer>
         {tags.map((tag, index) => (
           <Tag key={index}>{tag}</Tag>
         ))}
-      </div>
+        <TagField
+          type="text"
+          value={tagInput}
+          onChange={handleTagChange}
+          onKeyDown={handleKeyDown}
+          placeholder="태그 입력 후 엔터 키를 누르세요"
+        />
+      </TagContainer>
       <ToolBar>
+        <ToolButton onClick={() => addHeader(1)}>H1</ToolButton>
+        <ToolButton onClick={() => addHeader(2)}>H2</ToolButton>
+        <ToolButton onClick={() => addHeader(3)}>H3</ToolButton>
+        <ToolButton onClick={() => addHeader(3)}>H4</ToolButton>
+
         <ToolLine />
+
+        <IconButton>
+          <FormatBoldOutlinedIcon
+            sx={{
+              size: '24px',
+              color: '#C4C4C4',
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <FormatItalicOutlinedIcon
+            sx={{
+              size: '24px',
+              color: '#C4C4C4',
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <FormatStrikethroughOutlinedIcon
+            sx={{
+              size: '24px',
+              color: '#C4C4C4',
+            }}
+          />
+        </IconButton>
+
+        <ToolLine />
+
+        <IconButton>
+          <FormatQuoteOutlinedIcon
+            sx={{
+              size: '24px',
+              color: '#C4C4C4',
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <InsertLinkOutlinedIcon
+            sx={{
+              size: '24px',
+              color: '#C4C4C4',
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <CropOriginalIcon
+            sx={{
+              size: '24px',
+              color: '#C4C4C4',
+            }}
+          />
+        </IconButton>
+        <IconButton>
+          <CodeOutlinedIcon
+            sx={{
+              size: '24px',
+              color: '#C4C4C4',
+            }}
+          />
+        </IconButton>
       </ToolBar>
       <MainField
+        ref={mainFieldRef}
         onChange={handleMainChange}
         value={main}
         placeholder="진지하지 않은 이야기를 적어보세요!"
