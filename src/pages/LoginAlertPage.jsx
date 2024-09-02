@@ -17,11 +17,21 @@ const ModalOverlay = styled.div`
 `;
 
 const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
   background: white;
   padding: 20px;
   border-radius: 8px;
   width: 400px;
   text-align: center;
+`;
+
+const Title = styled.div`
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: left;
+  align-items: center;
 `;
 
 const CloseButton = styled.button`
@@ -65,7 +75,7 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
 
         // 사용자 정보를 Context에 설정
         setUser(userData);
-        onClose(); 
+        onClose();
       } catch (error) {
         setError(error.message);
       }
@@ -77,7 +87,7 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
   return (
     <ModalOverlay>
       <ModalContent>
-        <h2>로그인</h2>
+        <Title>로그인</Title>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <input
           type="text"
