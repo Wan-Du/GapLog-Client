@@ -47,7 +47,7 @@ function Category({ onSelectCategory }) {
         'http://3.37.43.129/api/category/users/1'
       );
       if (!response.ok) {
-        throw new Error('Failed to fetch user info');
+        throw new Error('Failed to fetch');
       }
       const data = await response.json();
       console.log('Categories Data:', data);

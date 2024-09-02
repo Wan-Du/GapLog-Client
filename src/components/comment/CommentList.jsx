@@ -10,9 +10,7 @@ function CommentList({ postId }) {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await fetch(
-          `http://3.37.43.129:3000/api/posts/${postId}`
-        );
+        const response = await fetch(`http://3.37.43.129/api/posts/${postId}`);
         const data = await response.json();
 
         if (data.status === '200') {

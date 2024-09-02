@@ -8,6 +8,7 @@ import TitleBar from '../components/bars/TitleBar';
 import CommentList from '../components/comment/CommentList';
 import CropOriginalIcon from '@mui/icons-material/CropOriginal';
 import IconButton from '@mui/material/IconButton';
+import { useUser } from '../components/user/UserContext';
 
 const Container = styled.div`
   width: calc(100% - 32px);
@@ -138,8 +139,41 @@ function ViewPostPage() {
   const [error, setError] = useState(null);
   const [comment, setComment] = useState('');
 
+  const { user } = useUser();
+
   const handleChange = (e) => {
     setComment(e.target.value);
+  };
+
+  const handleCommentSubmit = async () => {
+    if (!comment.trim()) {
+      return; // 빈 댓글 제출 방지
+    }
+
+    try {
+      const response = await fetch(`http://3.37.43.129/api/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_id: user.user_id,
+          post_id: post.post_id,
+          parent_id: null,
+          text: comment,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit comment');
+      }
+
+      // 댓글 제출 후 입력 필드 초기화
+      setComment('');
+      // 여기에서 댓글 목록을 다시 가져오거나 상태를 업데이트 할 수 있습니다.
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
   };
 
   useEffect(() => {
@@ -221,7 +255,7 @@ function ViewPostPage() {
             }}
           />
         </IconButton>
-        <SendButton>보내기</SendButton>
+        <SendButton onClick={handleCommentSubmit}>보내기</SendButton>
       </UserWrapper>
       <CommentList postId={postId}></CommentList>
     </Container>
