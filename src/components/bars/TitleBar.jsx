@@ -52,8 +52,12 @@ function TitleBar(props) {
   const nav = useNavigate();
   const location = useLocation();
 
-  const handleClick = () => {
+  const handleTitleClick = () => {
     if (location.pathname !== '/') nav('/');
+  };
+
+  const handleWriteClick = () => {
+    if (location.pathname !== '/write') nav('/write');
   };
 
   const handleLoginClick = () => {
@@ -62,14 +66,16 @@ function TitleBar(props) {
 
   return (
     <Container>
-      <MainTitleText onClick={handleClick}>GapLog</MainTitleText>
+      <MainTitleText onClick={handleTitleClick}>GapLog</MainTitleText>
       <ButtonWrapper>
         <FiSearch size="22" />
         {isLoggedIn ? (
           <>
             <FiBell size="22" />
             <FiSend size="22" onClick={() => setIsDMModalOpen(true)} />
-            <LoginButton title="새 글 작성">새 글 작성</LoginButton>
+            <LoginButton onClick={handleWriteClick} title="새 글 작성">
+              새 글 작성
+            </LoginButton>
           </>
         ) : (
           <LoginButton title="로그인" onClick={handleLoginClick}>
