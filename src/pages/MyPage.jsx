@@ -7,11 +7,11 @@ import MyPageBar from '../components/bars/MyPageBar';
 import Wandubat from '../components/user/Wandubat';
 import background from '../background.png';
 import profile from '../profile.png';
-import data from '../user.json';
 import Category from '../components/category/CategoryList';
+import { useUser } from '../components/user/UserContext';
 
 const Container = styled.div`
-  width: 100%;
+  width: calc(100% - 32px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -212,11 +212,48 @@ const CategoryWrapper = styled.div`
 `;
 
 function MyPage() {
-  const [userData, setUserData] = useState(null);
+  const { user } = useUser();
+  const [tier, setTier] = useState('');
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    setUserData(data.user);
-  }, []);
+    const fetchTiers = async () => {
+      try {
+        const response = await fetch(
+          `http://3.37.43.129/api/user/${user.userId}/seriousness`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch user info');
+        }
+        const data = await response.json();
+        console.log(data);
+        setTier(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const fetchUserPosts = async () => {
+      try {
+        const response = await fetch(
+          `http://3.37.43.129/api/user/${user.userId}/posts`
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch user posts');
+        }
+        const data = await response.json();
+        console.log(data);
+        setPosts(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    if (user) {
+      fetchTiers();
+      fetchUserPosts(); // 사용자 정보가 있을 때만 글 목록을 가져옴
+    }
+  }, [user]);
 
   return (
     <Container>
@@ -229,18 +266,16 @@ function MyPage() {
         <ProfileImg>
           <img src={profile} alt="profile" />
         </ProfileImg>
-        <UserId>{userData ? userData.id : 'null'}</UserId>
-        <UserBio>{userData ? userData.bio : ' '}</UserBio>
+        <UserId>{user ? user.nickName : 'null'}</UserId>
+        <UserBio>{user ? user.introduce : ' '}</UserBio>
         <FollowerWrapper>
           <UserFollower>
             <p>팔로워</p>
-            <a href="/mypage/follower">{userData ? userData.follower : ' '}</a>
+            <a href="/mypage/follower">{user ? user.follower : ' '}</a>
           </UserFollower>
           <UserFollower>
             <p>팔로잉</p>
-            <a href="/mypage/following">
-              {userData ? userData.following : ' '}
-            </a>
+            <a href="/mypage/following">{user ? user.following : ' '}</a>
           </UserFollower>
         </FollowerWrapper>
         <Button title="프로필 편집" className="grey" />
@@ -251,28 +286,29 @@ function MyPage() {
 
       <Wrapper>
         <TierWrapper>
-          {userData && (
+          {user && (
             <>
-              <TierTitle color={TierTitleColors[userData.tier] || '#30180d'}>
-                {TierNames[userData.tier] || 'Unknown Tier'}
+              <TierTitle color={TierTitleColors[tier.tier] || '#30180d'}>
+                {TierNames[tier.tier] || 'Unknown Tier'}
               </TierTitle>
-              <TierScore color={TierTitleColors[userData.tier] || '#30180d'}>
-                {userData.score}
+              <TierScore color={TierTitleColors[tier.tier] || '#30180d'}>
+                {tier.tier}
               </TierScore>
               <TierBar>
                 <TierScoreBar
-                  width={`${(userData.score / 100) * 100}%`}
-                  color={TierBarColors[userData.tier] || '#30180d'}
+                  width={`${(tier.tiers / 100) * 100}%`}
+                  color={TierBarColors[tier.tier] || '#30180d'}
                 />
               </TierBar>
             </>
           )}
         </TierWrapper>
-        <Wandubat />
+        <Wandubat userId={tier.userId} />
         <PostWrapper>
           <CategoryWrapper>
             <Category />
           </CategoryWrapper>
+          <PostList userId={tier.userId} posts={posts} pageType="mypage" />
         </PostWrapper>
       </Wrapper>
     </Container>

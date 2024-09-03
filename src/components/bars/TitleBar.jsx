@@ -4,10 +4,9 @@ import styled from 'styled-components';
 import Button from '../../style/Button';
 import { FiSearch, FiBell, FiSend } from 'react-icons/fi';
 import DmAlertPage from '../../pages/DmAlertPage';
-import LoginAlertPage from '../../pages/LoginAlertPage';
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { useUser } from '../user/UserContext'; // Context 사용
+import LoginAlertPage from '../../pages/LoginAlertPage'; // LoginAlertPage import
 
-//전체 모든 페이지에서 보여지는 gaplog 제목 bar
 const Container = styled.div`
   width: calc(100% - 32px);
   max-width: 1200px;
@@ -46,100 +45,119 @@ const LoginButton = styled(Button)`
   cursor: pointer;
 `;
 
+const ProfileImg = styled.div`
+  width: 35px;
+  height: 35px;
+  border-radius: 70%;
+  overflow: hidden;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const ProfileMenu = styled.div`
+  position: absolute;
+  right: 0;
+  top: 40px; // 버튼 아래 위치
+  width: 150px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+`;
+
+const MenuItem = styled.div`
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+`;
+
 function TitleBar(props) {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { user, isLoggedIn, setUser } = useUser();
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [isDMModalOpen, setIsDMModalOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // 로그인 모달 상태
   const nav = useNavigate();
   const location = useLocation();
 
-  const checkLoginStatus = () => {
-    const token = localStorage.getItem('token'); // 또는 sessionStorage.getItem('token')
-    return token ? true : false; // 토큰이 있으면 로그인 상태
+  const handleTitleClick = () => {
+    if (location.pathname !== '/') nav('/');
   };
 
-  useEffect(() => {
-    const loggedIn = checkLoginStatus();
-    setIsLoggedIn(loggedIn);
-  });
-
-  const openModal = () => {
-    setIsModalOpen(true);
+  const handleWriteClick = () => {
+    if (location.pathname !== '/write') nav('/write');
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const handleLoginClick = () => {
+    setIsLoginModalOpen(true); // 로그인 모달 열기
   };
 
-  const fetchUserInfo = async (jwtToken) => {
+  const handleProfileClick = () => {
+    setIsProfileMenuOpen((prev) => !prev); // 프로필 메뉴 열기/닫기
+  };
+
+  const handleLogout = async () => {
     try {
-      const response = await fetch('/api/user/me', {
-        // 또는 '/api/user/{user_id}' 형태로 수정 가능
+      const response = await fetch('http://3.37.43.129/api/auth/logout', {
         method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${jwtToken}`, // JWT를 Authorization 헤더에 포함
-          'Content-Type': 'application/json',
-        },
       });
 
       if (!response.ok) {
-        throw new Error('Failed to fetch user info');
+        throw new Error('로그아웃 실패');
       }
-      const userInfo = await response.json();
-      console.log('User Info:', userInfo);
-      return userInfo;
+
+      setUser(null);
+      nav('/');
     } catch (error) {
-      console.error('Error fetching user info:', error);
+      console.error('로그아웃 실패:', error);
     }
-  };
-
-  const handleLoginSuccess = async (credentialResponse) => {
-    const jwtToken = credentialResponse.credential; // JWT 토큰
-    console.log('JWT Token:', jwtToken);
-
-    // JWT를 로컬 스토리지에 저장
-    localStorage.setItem('token', jwtToken);
-
-    // 사용자 정보 가져오기
-    const userInfo = await fetchUserInfo(jwtToken);
-    if (userInfo) {
-      // 사용자 정보를 이용한 추가 로직 (예: 상태 업데이트)
-      console.log('Retrieved User Info:', userInfo);
-      setIsLoggedIn(true); // 로그인 상태 업데이트
-    }
-  };
-
-  const handleLoginFailure = (error) => {
-    console.error('로그인 실패:', error);
-  };
-
-  const handleClick = () => {
-    if (location.pathname != '/') nav('/');
   };
 
   return (
-    <GoogleOAuthProvider clientId="YOUR_GOOGLE_CLIENT_ID">
-      <Container>
-        <MainTitleText onClick={handleClick}>GapLog</MainTitleText>
-        <ButtonWrapper>
-          <FiSearch size="22" />
-          {!isLoggedIn ? (
-            <LoginButton title="로그인">로그인</LoginButton>
-          ) : (
-            <>
-              <FiBell size="22" />
-              <FiSend size="22" onClick={openModal} />
-              <LoginButton title="새 글 작성">새 글 작성</LoginButton>
-            </>
-          )}
-        </ButtonWrapper>
-        <DmAlertPage isOpen={isModalOpen} onClose={closeModal} />
-        <LoginAlertPage
-          isOpen={isModalOpen && !isLoggedIn}
-          onClose={closeModal}
-          onLogin={handleLoginSuccess}
-        />
-      </Container>
-    </GoogleOAuthProvider>
+    <Container>
+      <MainTitleText onClick={handleTitleClick}>GapLog</MainTitleText>
+      <ButtonWrapper>
+        <FiSearch size="22" />
+        {isLoggedIn ? (
+          <>
+            <FiBell size="22" />
+            <FiSend size="22" onClick={() => setIsDMModalOpen(true)} />
+            <LoginButton onClick={handleWriteClick} title="새 글 작성">
+              새 글 작성
+            </LoginButton>
+            <ProfileImg onClick={handleProfileClick}>
+              <img alt="profile" />
+            </ProfileImg>
+
+            {isProfileMenuOpen && (
+              <ProfileMenu>
+                <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
+                <MenuItem onClick={() => nav('/settings')}>설정</MenuItem>
+              </ProfileMenu>
+            )}
+          </>
+        ) : (
+          <LoginButton title="로그인" onClick={handleLoginClick}>
+            로그인
+          </LoginButton>
+        )}
+      </ButtonWrapper>
+      <DmAlertPage
+        isOpen={isDMModalOpen}
+        onClose={() => setIsDMModalOpen(false)}
+      />
+      <LoginAlertPage
+        isOpen={isLoginModalOpen}
+        onClose={() => setIsLoginModalOpen(false)}
+      />
+    </Container>
   );
 }
 

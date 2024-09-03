@@ -44,8 +44,11 @@ function Category({ onSelectCategory }) {
     try {
       const response = await fetch(
         // To Do: 사용자 ID를 동적으로 변경
-        'http://localhost:8080/api/category/users/1'
+        'http://3.37.43.129/api/category/users/1'
       );
+      if (!response.ok) {
+        throw new Error('Failed to fetch');
+      }
       const data = await response.json();
       console.log('Categories Data:', data);
       setCategories(data);
@@ -61,7 +64,7 @@ function Category({ onSelectCategory }) {
   const handleClick = async (categoryId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/category/${categoryId}`,
+        `http://3.37.43.129/api/category/${categoryId}`,
         {
           method: 'GET',
           headers: {

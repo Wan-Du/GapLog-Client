@@ -11,12 +11,6 @@ const Container = styled.div`
   flex-direction: row;
 `;
 
-const UserWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-right: 20px;
-`;
-
 const ProfileImg = styled.div`
   width: 50px;
   height: 50px;

@@ -1,7 +1,10 @@
 // LoginAlertPage.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { GoogleLogin } from '@react-oauth/google'; // Google OAuth 라이브러리
+import { useUser } from '../components/user/UserContext';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import IconButton from '@mui/material/IconButton';
+import { FcGoogle } from 'react-icons/fc';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -13,42 +16,114 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2000;
 `;
 
 const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
   background: white;
   padding: 20px;
+  gap: 10px;
   border-radius: 8px;
   width: 400px;
   text-align: center;
 `;
 
+const Title = styled.div`
+  font-family: 'Inter', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: left;
+  align-items: center;
+`;
+
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+`;
 const CloseButton = styled.button`
   margin-top: 20px;
 `;
 
-const LoginAlertPage = ({ isOpen, onClose, onLogin }) => {
+const LoginAlertPage = ({ isOpen, onClose }) => {
+  const { user, setUser, isLoggedIn, setIsLoggedIn } = useUser();
+  const [userId, setUserId] = useState('');
+  const [error, setError] = useState('');
+
+  const handleLogin = async () => {
+    if (userId) {
+      try {
+        const response = await fetch(`http://3.37.43.129/api/auth/1`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('로그인 실패: ' + response.status);
+        }
+
+        // 사용자 정보를 가져오는 API 호출
+        const userResponse = await fetch(
+          `http://3.37.43.129/api/user/${userId}`,
+          {
+            method: 'GET',
+          }
+        );
+
+        if (!userResponse.ok) {
+          throw new Error('사용자 정보 가져오기 실패: ' + userResponse.status);
+        }
+
+        const userData = await userResponse.json();
+
+        // 사용자 정보를 Context에 설정
+        setUser(userData);
+        onClose();
+      } catch (error) {
+        setError(error.message);
+      }
+    } else {
+      setError('아이디를 입력해주세요.');
+    }
+  };
+
+  useEffect(() => {
+    setIsLoggedIn(false);
+  }, [setIsLoggedIn]);
+
   if (!isOpen) return null;
-
-  const handleLoginSuccess = (credentialResponse) => {
-    const userId = credentialResponse.profileObj.email; // 사용자 이메일 또는 ID
-    onLogin(userId); // 부모 컴포넌트에 로그인 정보 전달
-    onClose(); // 모달 닫기
-  };
-
-  const handleLoginFailure = (error) => {
-    console.error('로그인 실패:', error);
-  };
 
   return (
     <ModalOverlay>
       <ModalContent>
-        <h2>로그인</h2>
-        <GoogleLogin
-          onSuccess={handleLoginSuccess}
-          onFailure={handleLoginFailure}
-          style={{ marginTop: '20px' }}
+        <Title>로그인</Title>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
+        <input
+          type="text"
+          placeholder="아이디"
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
+          required
         />
+        <ButtonWrapper>
+          <IconButton>
+            <GitHubIcon
+              sx={{
+                size: '24px',
+                color: 'black',
+              }}
+            />
+          </IconButton>
+          <FcGoogle size="24" />
+        </ButtonWrapper>
+        <button onClick={handleLogin}>로그인</button>
         <CloseButton onClick={onClose}>닫기</CloseButton>
       </ModalContent>
     </ModalOverlay>

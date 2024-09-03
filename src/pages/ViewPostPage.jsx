@@ -4,9 +4,12 @@ import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import background from '../background.png';
 import { FiHeart, FiMessageCircle, FiStar, FiMeh } from 'react-icons/fi';
+import TitleBar from '../components/bars/TitleBar';
 import CommentList from '../components/comment/CommentList';
 import CropOriginalIcon from '@mui/icons-material/CropOriginal';
 import IconButton from '@mui/material/IconButton';
+import { useUser } from '../components/user/UserContext';
+import CurrentTime from '../components/api/CurrentTime';
 
 const Container = styled.div`
   width: calc(100% - 32px);
@@ -14,7 +17,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  padding-top: 50px;
 `;
 
 const ContentWrapper = styled.div`
@@ -138,16 +140,54 @@ function ViewPostPage() {
   const [error, setError] = useState(null);
   const [comment, setComment] = useState('');
 
+  const { user } = useUser();
+
+  const time = CurrentTime();
+
   const handleChange = (e) => {
     setComment(e.target.value);
+  };
+
+  const handleCommentSubmit = async () => {
+    if (!comment.trim()) {
+      return; // 빈 댓글 제출 방지
+    }
+
+    try {
+      const response = await fetch(`http://3.37.43.129/api/comments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          created_at: time,
+          is_deleted: 0,
+          is_deleted_parent: 0,
+          updated_at: time,
+          link_count: 0,
+          user_id: user.user_id,
+          post_id: postId,
+          parent_id: null,
+          text: comment,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit comment');
+      }
+
+      // 댓글 제출 후 입력 필드 초기화
+      setComment('');
+      // 여기에서 댓글 목록을 다시 가져오거나 상태를 업데이트 할 수 있습니다.
+    } catch (error) {
+      console.error('Error submitting comment:', error);
+    }
   };
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8080/api/posts/${postId}`
-        ); // API URL 수정
+        const response = await fetch(`http://3.37.43.129/api/posts/${postId}`); // API URL 수정
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -178,6 +218,7 @@ function ViewPostPage() {
 
   return (
     <Container>
+      <TitleBar />
       <UserWrapper>
         <ProfileImg>
           <img src={post.username} alt="profile" />
@@ -196,13 +237,13 @@ function ViewPostPage() {
       </PostImg>
       <IconWrapper>
         <FiHeart size="24" />
-        <IconCount>{1}</IconCount>
+        <IconCount>{post.likeCount}</IconCount>
         <FiMessageCircle size="24" />
         <IconCount>{2}</IconCount>
         <FiStar size="24" />
-        <IconCount>{2}</IconCount>
+        <IconCount>{post.scrapCount}</IconCount>
         <FiMeh size="24" />
-        <IconCount>{2}</IconCount>
+        <IconCount>{post.jinjiCount}</IconCount>
       </IconWrapper>
       <UserWrapper>
         <ProfileImg>
@@ -222,7 +263,7 @@ function ViewPostPage() {
             }}
           />
         </IconButton>
-        <SendButton>보내기</SendButton>
+        <SendButton onClick={handleCommentSubmit}>보내기</SendButton>
       </UserWrapper>
       <CommentList postId={postId}></CommentList>
     </Container>

@@ -24,6 +24,12 @@ const StyledButton = styled.button`
     background-color: #c4c4c4;
     border: 1px solid #c4c4c4;
   }
+
+  &.green {
+    background-color: #5b9765;
+    border: 1px solid #5b9765;
+    color: white;
+  }
 `;
 
 function Button(props) {

@@ -19,7 +19,7 @@ const Wrapper = styled.div`
 `;
 
 function PostList(props) {
-  const { posts, onClickItem, pageType } = props;
+  const { userId, posts, onClickItem, pageType } = props;
 
   const columns = pageType === 'mypage' ? 2 : 3;
 
@@ -29,6 +29,7 @@ function PostList(props) {
         {posts.map((post) => {
           return (
             <PostItem
+              userId = {userId}
               key={post.id}
               post={post}
               onClick={() => {

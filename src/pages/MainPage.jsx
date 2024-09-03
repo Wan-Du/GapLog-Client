@@ -5,7 +5,7 @@ import MainBar from '../components/bars/MainBar';
 import TitleBar from '../components/bars/TitleBar';
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: calc(100% - 32px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -36,7 +36,15 @@ function MainPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/posts');
+        const response = await fetch('http://3.37.43.129/api/posts/recent', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user info');
+        }
         const data = await response.json();
         console.log('Posts Data: ', data);
         setPosts(data); // API로부터 받은 데이터를 state에 저장
