@@ -80,7 +80,7 @@ const MenuItem = styled.div`
 `;
 
 function TitleBar(props) {
-  const { user, isLoggedIn } = useUser();
+  const { user, isLoggedIn, setUser } = useUser();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isDMModalOpen, setIsDMModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // 로그인 모달 상태
@@ -105,11 +105,8 @@ function TitleBar(props) {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('/api/auth/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const response = await fetch('http://3.37.43.129/api/auth/logout', {
+        method: 'GET',
       });
 
       if (!response.ok) {
@@ -135,24 +132,23 @@ function TitleBar(props) {
             <LoginButton onClick={handleWriteClick} title="새 글 작성">
               새 글 작성
             </LoginButton>
+            <ProfileImg onClick={handleProfileClick}>
+              <img alt="profile" />
+            </ProfileImg>
+
+            {isProfileMenuOpen && (
+              <ProfileMenu>
+                <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
+                <MenuItem onClick={() => nav('/settings')}>설정</MenuItem>
+              </ProfileMenu>
+            )}
           </>
         ) : (
           <LoginButton title="로그인" onClick={handleLoginClick}>
             로그인
           </LoginButton>
         )}
-        <ProfileImg onClick={handleProfileClick}>
-          <img src={user.ProfileImg} alt="profile" />
-        </ProfileImg>
-
-        {isProfileMenuOpen && (
-          <ProfileMenu>
-            <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
-            <MenuItem onClick={() => nav('/settings')}>설정</MenuItem>
-          </ProfileMenu>
-        )}
       </ButtonWrapper>
-
       <DmAlertPage
         isOpen={isDMModalOpen}
         onClose={() => setIsDMModalOpen(false)}

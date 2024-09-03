@@ -3,16 +3,16 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem('user');
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-
-  // 로그인 상태를 상태로 관리
-  const [isLoggedIn, setIsLoggedIn] = useState(!!user);
+  const [user, setUser] = useState(null); // 초기 상태를 null로 설정
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 초기 로그인 상태를 false로 설정
 
   useEffect(() => {
-    // user가 변경될 때마다 로그인 상태 업데이트 및 로컬 스토리지에 저장
+    localStorage.removeItem('user');
+    setUser(null);
+    setIsLoggedIn(false);
+  }, []);
+
+  useEffect(() => {
     if (user) {
       console.log('user 존재');
       console.log(user);
@@ -25,7 +25,7 @@ export const UserProvider = ({ children }) => {
   }, [user]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoggedIn }}>
+    <UserContext.Provider value={{ user, setUser, isLoggedIn, setIsLoggedIn }}>
       {children}
     </UserContext.Provider>
   );

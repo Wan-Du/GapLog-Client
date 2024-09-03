@@ -1,7 +1,10 @@
 // LoginAlertPage.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useUser } from '../components/user/UserContext';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import IconButton from '@mui/material/IconButton';
+import { FcGoogle } from 'react-icons/fc';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -21,6 +24,7 @@ const ModalContent = styled.div`
   flex-direction: column;
   background: white;
   padding: 20px;
+  gap: 10px;
   border-radius: 8px;
   width: 400px;
   text-align: center;
@@ -34,6 +38,14 @@ const Title = styled.div`
   align-items: center;
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+`;
 const CloseButton = styled.button`
   margin-top: 20px;
 `;
@@ -42,8 +54,6 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
   const { user, setUser, isLoggedIn, setIsLoggedIn } = useUser();
   const [userId, setUserId] = useState('');
   const [error, setError] = useState('');
-
-  if (!isOpen) return null;
 
   const handleLogin = async () => {
     if (userId) {
@@ -84,6 +94,12 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
     }
   };
 
+  useEffect(() => {
+    setIsLoggedIn(false);
+  }, [setIsLoggedIn]);
+
+  if (!isOpen) return null;
+
   return (
     <ModalOverlay>
       <ModalContent>
@@ -96,6 +112,17 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
           onChange={(e) => setUserId(e.target.value)}
           required
         />
+        <ButtonWrapper>
+          <IconButton>
+            <GitHubIcon
+              sx={{
+                size: '24px',
+                color: 'black',
+              }}
+            />
+          </IconButton>
+          <FcGoogle size="24" />
+        </ButtonWrapper>
         <button onClick={handleLogin}>로그인</button>
         <CloseButton onClick={onClose}>닫기</CloseButton>
       </ModalContent>
