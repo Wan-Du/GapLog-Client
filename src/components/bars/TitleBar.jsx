@@ -105,15 +105,17 @@ function TitleBar(props) {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch('http://3.37.43.129/api/auth/logout', {
-        method: 'GET',
-      });
+      // 로컬 스토리지에서 access 토큰 제거
+      localStorage.removeItem('accessToken');
 
-      if (!response.ok) {
-        throw new Error('로그아웃 실패');
-      }
+      // 쿠키에서 refresh 토큰 제거
+      document.cookie =
+        'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
+      // 사용자 상태를 null로 설정
       setUser(null);
+
+      // 홈 페이지로 리디렉션
       nav('/');
     } catch (error) {
       console.error('로그아웃 실패:', error);
