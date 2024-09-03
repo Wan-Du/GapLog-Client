@@ -116,7 +116,7 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
         <Title>로그인</Title>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <ButtonWrapper>
-          <IconButton onClick={handleGoogleLogin}>
+          <IconButton>
             <GitHubIcon
               sx={{
                 size: '24px',
@@ -124,7 +124,7 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
               }}
             />
           </IconButton>
-          <FcGoogle size="24" />
+          <FcGoogle size="24" onClick={handleGoogleLogin} />
         </ButtonWrapper>
         <button>로그인</button>
         <CloseButton onClick={onClose}>닫기</CloseButton>
