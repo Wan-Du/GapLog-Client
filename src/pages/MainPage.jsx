@@ -36,7 +36,7 @@ function MainPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://3.37.43.129/api/posts');
+        const response = await fetch('http://3.37.43.129/api/posts/recent');
         if (!response.ok) {
           throw new Error('Failed to fetch user info');
         }
