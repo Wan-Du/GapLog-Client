@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import wanduData from '../../wandu.json';
 
 // 숫자에 따른 색상 매핑
 const getColor = (value) => {
@@ -136,11 +134,35 @@ const Grass = ({ dailyData }) => {
   );
 };
 
-function Wandubat() {
+function Wandubat(props) {
+  const { userId } = props;
   const [dailyData, setDailyData] = useState({});
 
   useEffect(() => {
-    setDailyData(wanduData);
+    const fetchWandu = async () => {
+      try {
+        const response = await fetch(
+          `http://3.37.43.129/api/user/${userId}/seriousness/seriousness-field`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error('Failed to fetch wandu');
+        }
+        const data = await response.json();
+        console.log(data);
+        setDailyData(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+      }
+    };
+
+    fetchWandu();
   }, []);
 
   return (
@@ -172,9 +194,5 @@ function Wandubat() {
     </Container>
   );
 }
-
-Grass.propTypes = {
-  dailyData: PropTypes.object.isRequired,
-};
 
 export default Wandubat;

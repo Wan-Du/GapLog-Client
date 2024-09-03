@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { FiHeart, FiMessageCircle, FiStar, FiMeh } from 'react-icons/fi';
@@ -106,7 +106,8 @@ const MainText = styled.p`
 `;
 
 function PostItem(props) {
-  const { post, onClick } = props;
+  const { userId, post, onClick } = props;
+  const [user, setUser] = useState('');
   const nav = useNavigate();
   const location = useLocation();
 
@@ -114,30 +115,53 @@ function PostItem(props) {
     if (location.pathname != `/posts/${post.id}`) nav(`/posts/${post.id}`);
   };
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch(`http://3.37.43.129/api/user/${userId}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user info');
+        }
+        const data = await response.json();
+        setUser(data);
+      } catch (err) {
+        console.error(err);
+      } finally {
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   return (
     <Container onClick={handleClick}>
       <UserWrapper>
         <ProfileImg>
-          <img src={post.userprofile} alt="profile" />
+          <img src={user.profileImg} alt="profile" />
         </ProfileImg>
         <UserInfo>
-          <UserId>{post.userid}</UserId>
-          <Date>{post.date}</Date>
+          <UserId>{user.userId}</UserId>
+          <Date>{post.updatedAt}</Date>
         </UserInfo>
       </UserWrapper>
       <PostImg>
-        <img src={post.userprofile} alt="profile" />
+        <img src={post.postImg} alt="profile" />
       </PostImg>
 
       <IconWrapper>
         <FiHeart size="20" />
-        <IconCount>{post.likes}</IconCount>
+        <IconCount>{post.likeCount}</IconCount>
         <FiMessageCircle size="20" />
         <IconCount>{post.comments}</IconCount>
         <FiStar size="20" />
         <IconCount>{post.scrapCount}</IconCount>
         <FiMeh size="20" />
-        <IconCount>{post.SeriousnessCount}</IconCount>
+        <IconCount>{post.jinjiCount}</IconCount>
       </IconWrapper>
       <TitleText>{post.title}</TitleText>
       <MainText>{post.content}</MainText>

@@ -3,24 +3,22 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null); // 초기 상태를 null로 설정
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // 초기 로그인 상태를 false로 설정
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-  useEffect(() => {
-    localStorage.removeItem('user');
-    setUser(null);
-    setIsLoggedIn(false);
-  }, []);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!user);
 
   useEffect(() => {
     if (user) {
       console.log('user 존재');
       console.log(user);
       setIsLoggedIn(true);
-      localStorage.setItem('user', JSON.stringify(user)); // 사용자 정보를 로컬 스토리지에 저장
+      localStorage.setItem('user', JSON.stringify(user));
     } else {
       setIsLoggedIn(false);
-      localStorage.removeItem('user'); // 사용자 정보가 없을 경우 로컬 스토리지에서 삭제
+      localStorage.removeItem('user');
     }
   }, [user]);
 
