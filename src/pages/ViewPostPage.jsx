@@ -9,6 +9,7 @@ import CommentList from '../components/comment/CommentList';
 import CropOriginalIcon from '@mui/icons-material/CropOriginal';
 import IconButton from '@mui/material/IconButton';
 import { useUser } from '../components/user/UserContext';
+import CurrentTime from '../components/api/CurrentTime';
 
 const Container = styled.div`
   width: calc(100% - 32px);
@@ -141,6 +142,8 @@ function ViewPostPage() {
 
   const { user } = useUser();
 
+  const time = CurrentTime();
+
   const handleChange = (e) => {
     setComment(e.target.value);
   };
@@ -157,8 +160,13 @@ function ViewPostPage() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          created_at: time,
+          is_deleted: 0,
+          is_deleted_parent: 0,
+          updated_at: time,
+          link_count: 0,
           user_id: user.user_id,
-          post_id: post.post_id,
+          post_id: postId,
           parent_id: null,
           text: comment,
         }),
@@ -229,13 +237,13 @@ function ViewPostPage() {
       </PostImg>
       <IconWrapper>
         <FiHeart size="24" />
-        <IconCount>{1}</IconCount>
+        <IconCount>{post.likeCount}</IconCount>
         <FiMessageCircle size="24" />
         <IconCount>{2}</IconCount>
         <FiStar size="24" />
-        <IconCount>{2}</IconCount>
+        <IconCount>{post.scrapCount}</IconCount>
         <FiMeh size="24" />
-        <IconCount>{2}</IconCount>
+        <IconCount>{post.jinjiCount}</IconCount>
       </IconWrapper>
       <UserWrapper>
         <ProfileImg>
