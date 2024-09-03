@@ -5,7 +5,7 @@ import MainBar from '../components/bars/MainBar';
 import TitleBar from '../components/bars/TitleBar';
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: calc(100% - 32px);
   display: flex;
   flex-direction: column;
   align-items: center;

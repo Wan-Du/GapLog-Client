@@ -45,8 +45,43 @@ const LoginButton = styled(Button)`
   cursor: pointer;
 `;
 
+const ProfileImg = styled.div`
+  width: 35px;
+  height: 35px;
+  border-radius: 70%;
+  overflow: hidden;
+
+  & > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
+const ProfileMenu = styled.div`
+  position: absolute;
+  right: 0;
+  top: 40px; // 버튼 아래 위치
+  width: 150px;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1001;
+`;
+
+const MenuItem = styled.div`
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background: #f0f0f0;
+  }
+`;
+
 function TitleBar(props) {
   const { user, isLoggedIn } = useUser();
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isDMModalOpen, setIsDMModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // 로그인 모달 상태
   const nav = useNavigate();
@@ -62,6 +97,30 @@ function TitleBar(props) {
 
   const handleLoginClick = () => {
     setIsLoginModalOpen(true); // 로그인 모달 열기
+  };
+
+  const handleProfileClick = () => {
+    setIsProfileMenuOpen((prev) => !prev); // 프로필 메뉴 열기/닫기
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('로그아웃 실패');
+      }
+
+      setUser(null);
+      nav('/');
+    } catch (error) {
+      console.error('로그아웃 실패:', error);
+    }
   };
 
   return (
@@ -82,7 +141,18 @@ function TitleBar(props) {
             로그인
           </LoginButton>
         )}
+        <ProfileImg onClick={handleProfileClick}>
+          <img src={user.ProfileImg} alt="profile" />
+        </ProfileImg>
+
+        {isProfileMenuOpen && (
+          <ProfileMenu>
+            <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
+            <MenuItem onClick={() => nav('/settings')}>설정</MenuItem>
+          </ProfileMenu>
+        )}
       </ButtonWrapper>
+
       <DmAlertPage
         isOpen={isDMModalOpen}
         onClose={() => setIsDMModalOpen(false)}
