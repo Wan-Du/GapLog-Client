@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useUser } from '../components/user/UserContext';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import { useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -51,52 +52,61 @@ const CloseButton = styled.button`
 `;
 
 const LoginAlertPage = ({ isOpen, onClose }) => {
-  const { user, setUser, isLoggedIn, setIsLoggedIn } = useUser();
-  const [userId, setUserId] = useState('');
+  const { setUser, setIsLoggedIn } = useUser();
+  const navigate = useNavigate();
   const [error, setError] = useState('');
 
-  const handleLogin = async () => {
-    if (userId) {
-      try {
-        const response = await fetch(`http://3.37.43.129/api/auth/1`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+  const GOOGLE_CLIENT_ID =
+    '532116958585-ai85p5m9l2b6toodbgrvri9ejovfvjil.apps.googleusercontent.com';
+  const REDIRECT_URI = 'http://localhost:3000';
+  const SCOPE =
+    'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';
+  const RESPONSE_TYPE = 'code';
 
-        if (!response.ok) {
-          throw new Error('로그인 실패: ' + response.status);
-        }
+  const handleGoogleLogin = () => {
+    const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${encodeURIComponent(
+      REDIRECT_URI
+    )}&scope=${encodeURIComponent(SCOPE)}&response_type=${RESPONSE_TYPE}`;
 
-        // 사용자 정보를 가져오는 API 호출
-        const userResponse = await fetch(
-          `http://3.37.43.129/api/user/${userId}`,
-          {
-            method: 'GET',
-          }
-        );
-
-        if (!userResponse.ok) {
-          throw new Error('사용자 정보 가져오기 실패: ' + userResponse.status);
-        }
-
-        const userData = await userResponse.json();
-
-        // 사용자 정보를 Context에 설정
-        setUser(userData);
-        onClose();
-      } catch (error) {
-        setError(error.message);
-      }
-    } else {
-      setError('아이디를 입력해주세요.');
-    }
+    window.location.href = oauthUrl;
   };
 
   useEffect(() => {
-    setIsLoggedIn(false);
-  }, [setIsLoggedIn]);
+    const fetchToken = async (code) => {
+      try {
+        const response = await fetch('http://localhost:8080/api/auth/google', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ authorizationCode: code }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to retrieve token');
+        }
+
+        const data = await response.json();
+        const token = data.accessToken;
+
+        // JWT 토큰을 로컬 스토리지에 저장
+        localStorage.setItem('access_token', token);
+        setIsLoggedIn(true);
+
+        // 사용자 대시보드로 리디렉션
+        navigate('/mypage');
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+
+    if (code) {
+      fetchToken(code);
+    }
+  }, [navigate, setIsLoggedIn]);
 
   if (!isOpen) return null;
 
@@ -105,15 +115,8 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
       <ModalContent>
         <Title>로그인</Title>
         {error && <p style={{ color: 'red' }}>{error}</p>}
-        <input
-          type="text"
-          placeholder="아이디"
-          value={userId}
-          onChange={(e) => setUserId(e.target.value)}
-          required
-        />
         <ButtonWrapper>
-          <IconButton>
+          <IconButton onClick={handleGoogleLogin}>
             <GitHubIcon
               sx={{
                 size: '24px',
@@ -123,7 +126,7 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
           </IconButton>
           <FcGoogle size="24" />
         </ButtonWrapper>
-        <button onClick={handleLogin}>로그인</button>
+        <button>로그인</button>
         <CloseButton onClick={onClose}>닫기</CloseButton>
       </ModalContent>
     </ModalOverlay>
