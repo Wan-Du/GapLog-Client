@@ -74,7 +74,7 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
   useEffect(() => {
     const fetchToken = async (code) => {
       try {
-        const response = await fetch('http://localhost:8080/api/auth/google', {
+        const response = await fetch('http://3.37.43.129/api/auth/google', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
         const token = data.accessToken;
 
         // JWT 토큰을 로컬 스토리지에 저장
-        localStorage.setItem('access_token', token);
+        localStorage.setItem('accessToken', token);
         setIsLoggedIn(true);
 
         // 사용자 대시보드로 리디렉션

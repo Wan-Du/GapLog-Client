@@ -42,10 +42,16 @@ function Category({ onSelectCategory }) {
 
   const fetchCategories = async () => {
     try {
-      const response = await fetch(
-        // To Do: 사용자 ID를 동적으로 변경
-        'http://3.37.43.129/api/category/users/1'
-      );
+      const accessToken = localStorage.getItem('accessToken');
+      const response = await fetch('http://3.37.43.129/api/category/users', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+          // Authorization 헤더에 accessToken 추가
+          // To Do : 유저 아이디가 필요한 경우, 로그인 시 localStorage에 저장된 userId를 사용하도록 모든 fetch 요청에 추가
+        },
+      });
       if (!response.ok) {
         throw new Error('Failed to fetch');
       }
