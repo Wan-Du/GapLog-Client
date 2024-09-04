@@ -219,8 +219,16 @@ function MyPage() {
   useEffect(() => {
     const fetchTiers = async () => {
       try {
+        const accessToken = localStorage.getItem('accessToken');
         const response = await fetch(
-          `http://3.37.43.129/api/user/${user.userId}/seriousness`
+          `http://3.37.43.129/api/user/seriousness`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
+            },
+          }
         );
         if (!response.ok) {
           throw new Error('Failed to fetch user info');
@@ -235,9 +243,14 @@ function MyPage() {
 
     const fetchUserPosts = async () => {
       try {
-        const response = await fetch(
-          `http://3.37.43.129/api/user/${user.userId}/posts`
-        );
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await fetch(`http://3.37.43.129/api/user/posts`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch user posts');
         }
@@ -260,7 +273,6 @@ function MyPage() {
       <TitleBar />
       <UserWrapper>
         <UserBackgroundImg>
-          {/* data에서 user의 배경이미지와 연결 */}
           <img src={background} alt="back" />
         </UserBackgroundImg>
         <ProfileImg>

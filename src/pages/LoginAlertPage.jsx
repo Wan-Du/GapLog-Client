@@ -94,7 +94,7 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
         setIsLoggedIn(true);
 
         // 사용자 대시보드로 리디렉션
-        navigate('/mypage');
+        navigate('/');
       } catch (error) {
         setError(error.message);
       }
