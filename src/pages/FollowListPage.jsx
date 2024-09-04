@@ -2,7 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TitleBar from '../components/bars/TitleBar';
-import FollowItem from '../components/user/FollowItem';
+import FollowingList from '../components/user/FollowingList';
+import FollowerList from '../components/user/FollowerList';
 
 const Container = styled.div`
   width: calc(100% - 32px);
@@ -56,22 +57,42 @@ const TitleWrapper = styled.div`
   }
 `;
 
-function FollowListPage() {
-  return (
-    <Container>
-      <TitleBar />
-      <UserWrapper>
-        <ProfileImg>
-          <img alt="profile" />
-        </ProfileImg>
-        <UserId>jinji123의 팔로워</UserId>
-      </UserWrapper>
-      <TitleWrapper>
-        <TitleWrapper className="count">20명</TitleWrapper>의 팔로워
-      </TitleWrapper>
-      <FollowItem></FollowItem>
-    </Container>
-  );
+function FollowListPage({ props }) {
+  const { userId, title } = props;
+
+  if (title == 'following') {
+    return (
+      <Container>
+        <TitleBar />
+        <UserWrapper>
+          <ProfileImg>
+            <img alt="profile" />
+          </ProfileImg>
+          <UserId>jinji123의 팔로워</UserId>
+        </UserWrapper>
+        <TitleWrapper>
+          <TitleWrapper className="count">20명</TitleWrapper>의 팔로워
+        </TitleWrapper>
+        <FollowingList userId={userId} />
+      </Container>
+    );
+  } else {
+    return (
+      <Container>
+        <TitleBar />
+        <UserWrapper>
+          <ProfileImg>
+            <img alt="profile" />
+          </ProfileImg>
+          <UserId>jinji123의 팔로워</UserId>
+        </UserWrapper>
+        <TitleWrapper>
+          <TitleWrapper className="count">20명</TitleWrapper>의 팔로워
+        </TitleWrapper>
+        <FollowerList userId={userId} />
+      </Container>
+    );
+  }
 }
 
 export default FollowListPage;

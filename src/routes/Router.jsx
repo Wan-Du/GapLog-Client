@@ -11,7 +11,6 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage posttype="recent" />} />
-        {/* test: /mypage로 임시 url 설정 */}
         <Route path="/mypage" element={<MyPage />} />
         <Route
           path="/mypage/follower"

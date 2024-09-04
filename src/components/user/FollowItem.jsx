@@ -52,17 +52,39 @@ const UserBio = styled.div`
   margin-right: 830px;
 `;
 
-function FollowItem() {
+function FollowItem({ props }) {
+  const { followeeId } = props;
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await fetch(
+        `http://3.37.43.129/api/users/${followeeId}`
+      );
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data);
+      }
+      setLoading(false);
+    };
+
+    fetchUser();
+  }, [followeeId]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!user) return null;
+
   return (
     <Container>
       <ProfileImg>
-        <img alt="profile" />
+        <img src={user.profileImage} alt="profile" />
       </ProfileImg>
       <UserInfo>
-        <UserNickname>나는다연</UserNickname>
-        <UserId>@hongdari</UserId>
+        <UserNickname>{user.nickName}</UserNickname>
+        <UserId>{user.userId}</UserId>
       </UserInfo>
-      <UserBio>안녕하시소</UserBio>
+      <UserBio>{user.introduce}</UserBio>
       <Button title="팔로우" className="green" />
     </Container>
   );
