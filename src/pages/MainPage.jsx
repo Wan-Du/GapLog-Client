@@ -28,7 +28,8 @@ const MainBarWrapper = styled.div`
   background-color: white;
 `;
 
-function MainPage() {
+function MainPage(props) {
+  const { posttype } = props;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,12 +37,15 @@ function MainPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://3.37.43.129/api/posts/recent', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `http://3.37.43.129/api/posts/${posttype}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch user info');
         }
@@ -56,7 +60,7 @@ function MainPage() {
     };
 
     fetchPosts();
-  }, []);
+  }, [posttype]);
 
   return (
     <Wrapper>

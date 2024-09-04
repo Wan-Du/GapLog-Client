@@ -10,7 +10,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<MainPage title="GabLog" />} />
+        <Route path="/" element={<MainPage posttype="recent" />} />
         {/* test: /mypage로 임시 url 설정 */}
         <Route path="/mypage" element={<MyPage />} />
         <Route
@@ -21,8 +21,8 @@ function Router() {
           path="/mypage/following"
           element={<FollowListPage title="following" />}
         />
-        <Route path="/following" element={<MainPage title="팔로잉" />} />
-        <Route path="/popular" element={<MainPage title="인기글" />} />
+        <Route path="/following" element={<MainPage posttype="recent" />} />
+        <Route path="/popular" element={<MainPage posttype="hot" />} />
         <Route path="/posts/:postId" element={<ViewPostPage />} />
         <Route path="/write" element={<WritePostPage />} />
       </Routes>
