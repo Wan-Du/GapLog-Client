@@ -140,6 +140,7 @@ function TitleBar(props) {
 
             {isProfileMenuOpen && (
               <ProfileMenu>
+                <MenuItem onClick={() => nav('/mypage')}>마이페이지</MenuItem>
                 <MenuItem onClick={handleLogout}>로그아웃</MenuItem>
                 <MenuItem onClick={() => nav('/settings')}>설정</MenuItem>
               </ProfileMenu>
