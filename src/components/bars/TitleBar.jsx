@@ -80,7 +80,7 @@ const MenuItem = styled.div`
 `;
 
 function TitleBar(props) {
-  const { user, isLoggedIn, setUser } = useUser();
+  const { user, isLoggedIn, setUser, setIsLoggedIn } = useUser();
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isDMModalOpen, setIsDMModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false); // 로그인 모달 상태
@@ -114,7 +114,7 @@ function TitleBar(props) {
 
       // 사용자 상태를 null로 설정
       setUser(null);
-
+      setIsLoggedIn(false);
       // 홈 페이지로 리디렉션
       nav('/');
     } catch (error) {
