@@ -19,7 +19,6 @@ const ContentWrapper = styled.div`
   margin-top: 20px;
 `;
 
-//mainbar(gaplog, 팔로잉, 인기글) layout -> 추후에 mainbar로 옮겨갈지 고민..
 const MainBarWrapper = styled.div`
   top: 0;
   width: calc(100% - 32px);
@@ -47,7 +46,7 @@ function MainPage(props) {
           }
         );
         if (!response.ok) {
-          throw new Error('Failed to fetch user info');
+          throw new Error('Failed to fetch info');
         }
         const data = await response.json();
         console.log('Posts Data: ', data);

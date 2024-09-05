@@ -11,7 +11,10 @@ function Router() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<MainPage posttype="recent" />} />
-        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/mypage/main" element={<MyPage nav="root" />} />
+        <Route path="/mypage/post" element={<MyPage nav="post" />} />
+        <Route path="/mypage/scrap" element={<MyPage nav="scrap" />} />
+        <Route path="/mypage/comment" element={<MyPage nav="comment" />} />
         <Route
           path="/mypage/follower"
           element={<FollowListPage title="follower" />}

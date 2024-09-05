@@ -211,7 +211,8 @@ const CategoryWrapper = styled.div`
   margin-right: 174px;
 `;
 
-function MyPage() {
+function MyPage(props) {
+  const { nav } = props;
   const { user } = useUser();
   const [tier, setTier] = useState('');
   const [posts, setPosts] = useState([]);
@@ -262,11 +263,113 @@ function MyPage() {
       }
     };
 
+    const fetchScrapPosts = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await fetch(`http://3.37.43.129/api/user/scraps`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user scraps');
+        }
+        const data = await response.json();
+        console.log(data);
+        setPosts(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    const fetchComments = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await fetch(`http://3.37.43.129/api/user/comments`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch user comments');
+        }
+        const data = await response.json();
+        console.log(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     if (user) {
       fetchTiers();
-      fetchUserPosts(); // 사용자 정보가 있을 때만 글 목록을 가져옴
+      fetchUserPosts();
+      fetchScrapPosts();
+      fetchComments();
     }
   }, [user]);
+
+  const renderContent = () => {
+    switch (nav) {
+      case 'post':
+        return (
+          <Wrapper>
+            <PostWrapper>
+              <CategoryWrapper>
+                <Category />
+              </CategoryWrapper>
+              <PostList userId={tier.userId} posts={posts} pageType="mypage" />
+            </PostWrapper>
+          </Wrapper>
+        );
+      case 'comment':
+        return <Wrapper></Wrapper>;
+      case 'scrap':
+        return (
+          <Wrapper>
+            <PostWrapper>
+              <CategoryWrapper>
+                <Category />
+              </CategoryWrapper>
+              <PostList userId={tier.userId} posts={posts} pageType="mypage" />
+            </PostWrapper>
+          </Wrapper>
+        );
+      default:
+        return (
+          <Wrapper>
+            <TierWrapper>
+              {user && (
+                <>
+                  <TierTitle color={TierTitleColors[tier.tier] || '#30180d'}>
+                    {TierNames[tier.tier] || 'Unknown Tier'}
+                  </TierTitle>
+                  <TierScore color={TierTitleColors[tier.tier] || '#30180d'}>
+                    {tier.tier}
+                  </TierScore>
+                  <TierBar>
+                    <TierScoreBar
+                      width={`${(tier.tiers / 100) * 100}%`}
+                      color={TierBarColors[tier.tier] || '#30180d'}
+                    />
+                  </TierBar>
+                </>
+              )}
+            </TierWrapper>
+            <Wandubat userId={tier.userId} />
+            <PostWrapper>
+              <CategoryWrapper>
+                <Category />
+              </CategoryWrapper>
+              <PostList userId={tier.userId} posts={posts} pageType="mypage" />
+            </PostWrapper>
+          </Wrapper>
+        );
+    }
+  };
 
   return (
     <Container>
@@ -296,33 +399,7 @@ function MyPage() {
         <MyPageBar />
       </MyPageBarWrapper>
 
-      <Wrapper>
-        <TierWrapper>
-          {user && (
-            <>
-              <TierTitle color={TierTitleColors[tier.tier] || '#30180d'}>
-                {TierNames[tier.tier] || 'Unknown Tier'}
-              </TierTitle>
-              <TierScore color={TierTitleColors[tier.tier] || '#30180d'}>
-                {tier.tier}
-              </TierScore>
-              <TierBar>
-                <TierScoreBar
-                  width={`${(tier.tiers / 100) * 100}%`}
-                  color={TierBarColors[tier.tier] || '#30180d'}
-                />
-              </TierBar>
-            </>
-          )}
-        </TierWrapper>
-        <Wandubat userId={tier.userId} />
-        <PostWrapper>
-          <CategoryWrapper>
-            <Category />
-          </CategoryWrapper>
-          <PostList userId={tier.userId} posts={posts} pageType="mypage" />
-        </PostWrapper>
-      </Wrapper>
+      {renderContent()}
     </Container>
   );
 }

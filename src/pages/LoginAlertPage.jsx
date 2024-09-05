@@ -87,12 +87,12 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
         }
 
         const data = await response.json();
+        console.log(data);
         const token = data.accessToken;
 
         // JWT 토큰을 로컬 스토리지에 저장
         localStorage.setItem('accessToken', token);
         setIsLoggedIn(true);
-
         // 사용자 대시보드로 리디렉션
         navigate('/');
       } catch (error) {
