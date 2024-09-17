@@ -265,14 +265,15 @@ function MyPage(props) {
 
     const fetchScrapPosts = async () => {
       try {
-        const accessToken = localStorage.getItem('accessToken');
-        const response = await fetch(`http://3.37.43.129/api/user/scraps`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`,
-          },
-        });
+        const response = await fetch(
+          `http://3.37.43.129/api/user/${user.userId}/scraps`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error('Failed to fetch user scraps');
         }
