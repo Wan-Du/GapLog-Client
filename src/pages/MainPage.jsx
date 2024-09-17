@@ -19,7 +19,6 @@ const ContentWrapper = styled.div`
   margin-top: 20px;
 `;
 
-//mainbar(gaplog, 팔로잉, 인기글) layout -> 추후에 mainbar로 옮겨갈지 고민..
 const MainBarWrapper = styled.div`
   top: 0;
   width: calc(100% - 32px);
@@ -28,7 +27,8 @@ const MainBarWrapper = styled.div`
   background-color: white;
 `;
 
-function MainPage() {
+function MainPage(props) {
+  const { posttype } = props;
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -36,14 +36,17 @@ function MainPage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://3.37.43.129/api/posts/recent', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `http://3.37.43.129/api/posts/${posttype}`,
+          {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        );
         if (!response.ok) {
-          throw new Error('Failed to fetch user info');
+          throw new Error('Failed to fetch info');
         }
         const data = await response.json();
         console.log('Posts Data: ', data);
@@ -56,7 +59,7 @@ function MainPage() {
     };
 
     fetchPosts();
-  }, []);
+  }, [posttype]);
 
   return (
     <Wrapper>

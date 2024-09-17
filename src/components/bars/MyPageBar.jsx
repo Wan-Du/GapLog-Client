@@ -39,11 +39,11 @@ function MyPageBar() {
       <Wrapper>
         <nav>
           {/* 임시 url */}
-          <NavItem to="/mypage" exact>
+          <NavItem to="/mypage/main" exact>
             개요
           </NavItem>
           <NavItem to="/mypage/post">게시글</NavItem>
-          <NavItem to="/mypage/scrab">스크랩</NavItem>
+          <NavItem to="/mypage/scrap">스크랩</NavItem>
           <NavItem to="/mypage/comment">댓글</NavItem>
         </nav>
       </Wrapper>

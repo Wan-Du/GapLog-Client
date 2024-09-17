@@ -75,6 +75,35 @@ const HideButton = styled.button`
 `;
 
 function CommentItem({ comment, hasReplies, onToggleHide }) {
+  const [isLiked, setIsLiked] = useState(comment.isLiked);
+
+  const toggleLike = async () => {
+    try {
+      const accessToken = localStorage.getItem('accessToken');
+      const response = await fetch(
+        `http://3.37.43.129/api/comments/${comment.id}/like`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to toggle like');
+      }
+
+      const data = await response.json(); // API로부터 반환된 데이터
+
+      // 상태 업데이트
+      setIsLiked(data.isLiked); // boolean 값 업데이트
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <Container>
       <ProfileImg>
@@ -87,7 +116,12 @@ function CommentItem({ comment, hasReplies, onToggleHide }) {
       <MainText>{comment.content}</MainText>
       <IconWrapper>
         <FiMessageCircle size="24" />
-        <FiHeart size="24" />
+        <div
+          onClick={toggleLike}
+          style={{ cursor: 'pointer', color: isLiked ? '#ff4081' : '#767676' }}
+        >
+          <FiHeart size="24" />
+        </div>
         {hasReplies && (
           <HideButton onClick={onToggleHide}>
             {comment.isHidden ? '댓글 보기' : '댓글 숨기기'}

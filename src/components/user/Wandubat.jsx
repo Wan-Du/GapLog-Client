@@ -141,12 +141,14 @@ function Wandubat(props) {
   useEffect(() => {
     const fetchWandu = async () => {
       try {
+        const accessToken = localStorage.getItem('accessToken');
         const response = await fetch(
-          `http://3.37.43.129/api/user/${userId}/seriousness/seriousness-field`,
+          `http://3.37.43.129/api/user/seriousness/seriousness-field`,
           {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
+              'Authorization': `Bearer ${accessToken}`,
             },
           }
         );

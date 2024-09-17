@@ -87,14 +87,31 @@ const LoginAlertPage = ({ isOpen, onClose }) => {
         }
 
         const data = await response.json();
+        console.log(data);
         const token = data.accessToken;
 
         // JWT 토큰을 로컬 스토리지에 저장
         localStorage.setItem('accessToken', token);
-        setIsLoggedIn(true);
 
+        const userResponse = await fetch('http://3.37.43.129/api/user', {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`, // access token을 Authorization 헤더에 추가
+          },
+        });
+
+        if (!userResponse.ok) {
+          throw new Error('Failed to retrieve user information');
+        }
+
+        const userData = await userResponse.json();
+        console.log(userData);
+
+        // 사용자 정보를 상태에 저장
+        setUser(userData);
+        setIsLoggedIn(true);
         // 사용자 대시보드로 리디렉션
-        navigate('/mypage');
+        navigate('/');
       } catch (error) {
         setError(error.message);
       }
